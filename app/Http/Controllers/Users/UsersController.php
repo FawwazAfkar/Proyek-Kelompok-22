@@ -44,6 +44,9 @@ class UsersController extends Controller
     }
 
     public function editAdmin($id)
+    {
+        
+    }
 
     public function hapusAdmin($id)
     {
