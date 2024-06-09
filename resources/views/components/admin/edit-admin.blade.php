@@ -13,45 +13,46 @@
                 <div class="row">
                     <div class="col-md-6 d-flex justify-content-center align-items-center">
                         {{-- foto mobil --}}
-                        <img src="{{ $admin->foto }}>
-                            class="img-fluid overflow-hidden
-                            img-circle" alt="Responsive image" id="imgPreview">
+                        <img src="{{ $admin->foto }}" class="img-fluid overflow-hidden img-circle"
+                            alt="Responsive image" id="imgPreview" width="100%">
                     </div>
                     <div class="col-md-6">
                         <form action="{{ route('admin.user-admin.edit') }}" method="POST"
                             enctype="multipart/form-data">
+                            @csrf
+                            @method('put')
                             <input type="hidden" name="id" id="id-admin" value="{{ $admin->id }}" readonly />
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" id="nama"
-                                        placeholder="ex Muhamad Galih" value={{ $admin->name }}>
+                                    <label for="name">Nama</label>
+                                    <input type="text" class="form-control" name="name" id="name"
+                                        placeholder="ex Muhamad Galih" value="{{ $admin->name }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email"
-                                        placeholder="ex xxxx@gmail.com" value="{{ $admin->email }}" </div>
-                                    <div class="form-group">
-                                        <label for="file">Foto Kendaraan</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="file">
-                                                <label class="custom-file-label" for="file">Choose file</label>
-                                            </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">Upload</span>
-                                            </div>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        placeholder="ex xxxx@gmail.com" value="{{ $admin->email }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="file">Foto Kendaraan</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="file"
+                                                id="file">
+                                            <label class="custom-file-label" for="file">Choose file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
                     </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    </form>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -59,3 +60,4 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+</div>
