@@ -24,7 +24,7 @@ require __DIR__.'/auth.php';
 
 // user route
 Route::middleware(['auth' , 'userMiddleware'])->group(function(){
-    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
 });
 // admin
 Route::middleware(['auth' , 'adminMiddleware'])->prefix('/admin')->group(function(){

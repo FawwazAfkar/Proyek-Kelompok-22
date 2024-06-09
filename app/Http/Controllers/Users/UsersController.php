@@ -51,6 +51,7 @@ class UsersController extends Controller
                     'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 ]);
 
+<<<<<<< HEAD
                 // Temukan user berdasarkan ID
                 $admin = User::findOrFail($request->id);
 
@@ -76,6 +77,12 @@ class UsersController extends Controller
                 // Redirect atau berikan respons sesuai kebutuhan
                 return redirect()->route('admin.user-admin.index')->with('success', 'Data admin berhasil di-update');
             }
+=======
+    public function editAdmin($id)
+    {
+        
+    }
+>>>>>>> d2f95a5ee33673e34ad24734d04be55570969e7d
 
     public function hapusAdmin($id)
     {

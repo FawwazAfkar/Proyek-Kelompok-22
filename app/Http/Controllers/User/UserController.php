@@ -9,6 +9,6 @@ class UserController extends Controller
 {
     public function index(){
         // ketika login dengan role user, maka akan diarahkan ke halaman dashboard
-        return view('dashboard');
+        return view('user.dashboard');
     }
 }
