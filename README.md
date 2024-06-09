@@ -1,2 +1,2 @@
-# Proyek-Kelompok-22
-Repositori untuk latihan Git dan GitHub Kelompok-22
+# Proyek-Kelompok-8
+Repositori untuk latihan Git dan GitHub Kelompok-8
