@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index(){
-        // ketika login dengan role user, maka akan diarahkan ke halaman dashboard
-        $cars = Car::latest()->get();
-        return view('user.dashboard', compact('cars'));
+        $recentCars = Car::latest()->take(3)->get();
+        return view('user.dashboard', compact('recentCars'));
     }
 }
