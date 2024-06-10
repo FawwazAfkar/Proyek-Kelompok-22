@@ -1,6 +1,6 @@
 {{-- Modal Hapus data Mobil --}}
-
-<div class="modal fade" id="modal-hapus">
+@props(['mobil'])
+<div class="modal fade" id="delete{{ $mobil }}">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,7 +14,11 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Hapus Data</button>
+                <form action="{{ route('admin.mobil.hapus', ['id' => $mobil]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                </form>
             </div>
         </div>
         <!-- /.modal-content -->

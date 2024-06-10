@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Car extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
-    protected $guarded =['id', 'created_at', 'updated_at'];
+    protected $fillable = [
+        "nama_mobil","harga_sewa","gambar","status","deskripsi"
+    ];
+
+
 }

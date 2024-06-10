@@ -94,10 +94,10 @@ class UsersController extends Controller
     {
         $admin = User::find($id);
 
-        if (!$admin) {
-            return redirect()->route('admin.user-admin.index')->with('error','Admin tidak ditemukan.');
+       // gambar admin sebelumnya jika ada
+       if ($admin->foto !== '/storage/images/default.png' && Storage::exists(str_replace('/storage', 'public', $admin->foto))) {
+            Storage::delete(str_replace('/storage', 'public', $admin->foto));
         }
-
         $admin->delete();
         return redirect()->route('admin.user-admin.index')->with('success','Admin berhasil dihapus.');
     }

@@ -37,6 +37,7 @@
                                 <th>Harga Sewa</th>
                                 <th>Deskripsi</th>
                                 <th>Foto</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -44,11 +45,18 @@
                             @foreach ($mobils as $mobil)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $mobil->nama }}</td>
-                                    <td>{{ $mobil->harga }}</td>
+                                    <td>{{ $mobil->nama_mobil }}</td>
+                                    <td>{{ $mobil->harga_sewa }}</td>
                                     <td>{{ $mobil->deskripsi }}</td>
-                                    <td><img src="{{ asset('storage/' . $mobil->foto) }}" alt="Foto Mobil"
+                                    <td><img src="{{ asset($mobil->gambar) }}" alt="Foto Mobil"
                                             class="img-circle img-size-32 mr-2"></td>
+                                    <td>
+                                        @if ($mobil->status)
+                                            <span class="badge badge-success">Tersedia</span>
+                                        @else
+                                            <span class="badge badge-danger">Tidak Tersedia</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                             data-target="#edit{{ $mobil->id }}">
@@ -58,6 +66,8 @@
                                             data-target="#delete{{ $mobil->id }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
+                                        <x-admin.edit-mobil :mobil="$mobil" />
+                                        <x-admin.delete-mobil :mobil="$mobil->id" />
                                     </td>
                                 </tr>
                             @endforeach
@@ -69,6 +79,7 @@
                                 <th>Harga Sewa</th>
                                 <th>Deskripsi</th>
                                 <th>Foto</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </tfoot>
