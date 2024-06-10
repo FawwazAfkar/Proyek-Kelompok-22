@@ -31,9 +31,10 @@ Route::middleware(['auth' , 'adminMiddleware'])->prefix('/admin')->group(functio
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::prefix('/mobil')->group(function() {
         Route::get('/', [CarController::class, 'index'])->name('admin.mobil.index');
-        Route::post('/tambah', [CarController::class, 'adminCarStore'])->name('admin.mobil.tambah');
         // Additional routes for 'mobil' can be added here
         Route::post('/tambah', [CarController::class, 'tambahMobil'])->name('admin.mobil.tambah');
+        Route::put('/edit/{id}', [CarController::class, 'editMobil'])->name('admin.mobil.edit');
+        Route::delete('hapus/{id}', [CarController::class, 'hapusMobil'])->name('admin.mobil.hapus');
     });
     Route::prefix('/user-admin')->group(function() {
         Route::get('/', [UsersController::class,'indexAdmin'])->name('admin.user-admin.index');

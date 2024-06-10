@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="namaMobil">Nama Mobil</label>
-                            <input type="email" class="form-control" id="namaMobil" name="namaMobil"
+                            <input type="text" class="form-control" id="namaMobil" name="namaMobil"
                                 placeholder="ex Avanza Toyota">
                         </div>
                         <div class="form-group">
@@ -25,7 +25,8 @@
                                         <i class="fas fa-dollar-sign"></i>
                                     </span>
                                 </div>
-                                <input type="number" class="form-control" id="harga_sewa" placeholder="Harga Sewa">
+                                <input type="number" class="form-control" id="harga_sewa" placeholder="Harga Sewa"
+                                    name="harga_sewa">
                                 <div class="input-group-append">
                                     <div class="input-group-text"><i class="fas fa-check"></i></div>
                                 </div>
@@ -33,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label>Deskripsi Kendaraan</label>
-                            <textarea class="form-control" id="deskripsi" rows="3" placeholder="Enter ..."></textarea>
+                            <textarea class="form-control" id="deskripsi" rows="3" placeholder="Enter ..." name="deskripsi"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="gambar">Foto Kendaraan</label>
