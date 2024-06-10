@@ -49,17 +49,19 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->usertype }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td><img src="{{ asset('lte/dist/img/user2-160x160.jpg') }}" alt="Foto Customer"
+                                    <td><img src="{{ asset($user->foto) }}" alt="Foto Customer"
                                             class="img-circle img-size-32 mr-2"></td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#modal-edit-Customer">
+                                            data-target="#edit{{ $user->id }}">
                                             <i class="fa-solid fa-edit"></i>
                                         </button>
                                         <button type="button" class="btn btn-danger" data-toggle="modal"
-                                            data-target="#modal-hapus-Customer">
+                                            data-target="#delete{{ $user->id }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
+                                        <x-admin.delete-customer :user="$user->id" />
+                                        <x-admin.edit-customer :user="$user" />
                                     </td>
                                 </tr>
                             @endforeach

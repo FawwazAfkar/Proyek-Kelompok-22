@@ -1,6 +1,6 @@
 {{-- Modal Edit Data Admin --}}
-@props(['admin'])
-<div class="modal fade" id="edit{{ $admin->id }}">
+@props(['user'])
+<div class="modal fade" id="edit{{ $user->id }}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,40 +13,40 @@
                 <div class="row">
                     <div class="col-md-6 d-flex justify-content-center align-items-center">
                         {{-- foto admin --}}
-                        <img src="{{ $admin->foto }}" class="img-fluid overflow-hidden img-circle"
-                            alt="Responsive image" id="imgPreview{{ $admin->id }}" width="100%">
+                        <img src="{{ $user->foto }}" class="img-fluid overflow-hidden img-circle"
+                            alt="Responsive image" id="imgPreview{{ $user->id }}" width="100%">
                     </div>
                     <div class="col-md-6">
-                        <form action="{{ route('admin.user-admin.edit', $admin->id) }}" method="POST"
+                        <form action="{{ route('admin.user-customer.edit', $user->id) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name{{ $admin->id }}">Nama</label>
+                                    <label for="name{{ $user->id }}">Nama</label>
                                     <input type="text" class="form-control" name="name"
-                                        id="name{{ $admin->id }}" placeholder="ex Muhamad Galih"
-                                        value="{{ $admin->name }}" required>
+                                        id="name{{ $user->id }}" placeholder="ex Muhamad Galih"
+                                        value="{{ $user->name }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email{{ $admin->id }}">Email</label>
+                                    <label for="email{{ $user->id }}">Email</label>
                                     <input type="email" class="form-control" name="email"
-                                        id="email{{ $admin->id }}" placeholder="ex xxxx@gmail.com"
-                                        value="{{ $admin->email }}" required>
+                                        id="email{{ $user->id }}" placeholder="ex xxxx@gmail.com"
+                                        value="{{ $user->email }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password{{ $admin->id }}">Password</label>
+                                    <label for="password{{ $user->id }}">Password</label>
                                     <input type="password" class="form-control" name="password"
-                                        id="password{{ $admin->id }}" placeholder="Password">
+                                        id="password{{ $user->id }}" placeholder="Password">
                                     <small class="text-mute">Kosongkan jika tidak ingin mengganti password</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="file{{ $admin->id }}">Foto Profile</label>
+                                    <label for="file{{ $user->id }}">Foto Profile</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="file"
-                                                id="file{{ $admin->id }}">
-                                            <label class="custom-file-label" for="file{{ $admin->id }}">Choose
+                                                id="file{{ $user->id }}">
+                                            <label class="custom-file-label" for="file{{ $user->id }}">Choose
                                                 file</label>
                                         </div>
                                         <div class="input-group-append">
@@ -80,7 +80,7 @@
             // Update image preview
             var reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('imgPreview{{ $admin->id }}').src = e.target.result;
+                document.getElementById('imgPreview{{ $user->id }}').src = e.target.result;
             }
             reader.readAsDataURL(e.target.files[0]);
         });
