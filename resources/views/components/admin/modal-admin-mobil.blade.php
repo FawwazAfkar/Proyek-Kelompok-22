@@ -25,7 +25,7 @@
                                         <i class="fas fa-dollar-sign"></i>
                                     </span>
                                 </div>
-                                <input type="number" class="form-control" placeholder="Harga Sewa">
+                                <input type="number" class="form-control" id="harga_sewa" placeholder="Harga Sewa">
                                 <div class="input-group-append">
                                     <div class="input-group-text"><i class="fas fa-check"></i></div>
                                 </div>
@@ -33,10 +33,10 @@
                         </div>
                         <div class="form-group">
                             <label>Deskripsi Kendaraan</label>
-                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                            <textarea class="form-control" id="deskripsi" rows="3" placeholder="Enter ..."></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">Foto Kendaraan</label>
+                            <label for="gambar">Foto Kendaraan</label>
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="file" name="file">

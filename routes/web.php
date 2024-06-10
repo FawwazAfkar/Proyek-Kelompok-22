@@ -31,6 +31,7 @@ Route::middleware(['auth' , 'adminMiddleware'])->prefix('/admin')->group(functio
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::prefix('/mobil')->group(function() {
         Route::get('/', [CarController::class, 'index'])->name('admin.mobil.index');
+        Route::post('/tambah', [CarController::class, 'adminCarStore'])->name('admin.mobil.tambah');
         // Additional routes for 'mobil' can be added here
         Route::post('/tambah', [CarController::class, 'tambahMobil'])->name('admin.mobil.tambah');
     });
