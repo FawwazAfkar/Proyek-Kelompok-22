@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,66 +24,71 @@ class UsersController extends Controller
 
     public function tambahAdmin(Request $request)
     {
-        // Validasi data yang diterima dari form
-        $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
+       $request->validate([
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
-            // Anda bisa menambahkan validasi untuk foto profile sesuai kebutuhan
+            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if($request->hasFile('file')){
+            $path = $request->file('file');
+            $filename = time().'_'.$path->getClientOriginalName();
+            $path->storeAs('public/images/admin', $filename);
+            $pathStore = '/storage/images/admin/'.$filename;
+        }else{
+            $pathStore = '/storage/images/default.png';
+        }
+        $admin = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'foto' => $pathStore,
+            'usertype' => 'admin',
         ]);
 
-        // Buat instance user baru
-        $user = new User();
-        $user->name = $request->input('nama');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        // Tambahkan atribut lainnya sesuai kebutuhan, misalnya usertype
-        $user->usertype = 'admin';
-
-        // Simpan user baru ke database
-        $user->save();
-        return redirect()->route('admin.user-admin.index')->with('success','Admin berhasil ditambahkan.');
+        return redirect()->route('admin.user-admin.index')->with('success', 'Admin berhasil ditambahkan');
     }
-    public function editAdmin(Request $request)
-            {
-                $validatedData = $request->validate([
-                    'name' => 'required|string|max:255',
-                    'email' => 'required|email|unique:users,email,' . $request->id,
-                    'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                ]);
 
-<<<<<<< HEAD
-                // Temukan user berdasarkan ID
-                $admin = User::findOrFail($request->id);
+    public function editAdmin(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'password' => 'nullable|string|min:8',
+        'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-                // Update data user
-                $admin->name = $request->name;
-                $admin->email = $request->email;
+    // Temukan admin yang ingin diedit
+    $admin = User::findOrFail($id);
 
-                // Jika ada file foto yang di-upload
-                if ($request->hasFile('file')) {
-                    // Hapus file lama jika ada
-                    if ($admin->foto) {
-                        Storage::delete($admin->foto);
-                    }
-
-                    // Simpan file foto baru
-                    $path = $request->file('file')->store('public/foto/admin');
-                    $admin->foto = $path;
-                }
-
-                // Simpan perubahan
-                $admin->save();
-
-                // Redirect atau berikan respons sesuai kebutuhan
-                return redirect()->route('admin.user-admin.index')->with('success', 'Data admin berhasil di-update');
-            }
-=======
-    public function editAdmin($id)
-    {
-        
+    // Hapus foto admin sebelumnya jika ada
+    if ($admin->foto !== '/storage/images/default.png' && Storage::exists(str_replace('/storage', 'public', $admin->foto))) {
+        Storage::delete(str_replace('/storage', 'public', $admin->foto));
     }
->>>>>>> d2f95a5ee33673e34ad24734d04be55570969e7d
+
+    // Perbarui data admin
+    $admin->name = $request->name;
+    $admin->email = $request->email;
+
+    // Perbarui password jika diisi dalam form
+    if ($request->filled('password')) {
+        $admin->password = Hash::make($request->password);
+    }
+
+    // Perbarui foto jika file diunggah
+    if ($request->hasFile('file')) {
+        $path = $request->file('file');
+        $filename = time() . '_' . $path->getClientOriginalName();
+        $path->storeAs('public/images/admin', $filename);
+        $pathStore = '/storage/images/admin/' . $filename;
+        $admin->foto = $pathStore;
+    }
+
+    // Simpan perubahan
+    $admin->save();
+
+    return redirect()->route('admin.user-admin.index')->with('success', 'Admin berhasil diperbarui');
+}
 
     public function hapusAdmin($id)
     {
@@ -97,26 +103,81 @@ class UsersController extends Controller
     }
     public function tambahCustomer(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        $customer = new User;
-        $customer->name = $request->name;
-        $customer->email = $request->email;
-        $customer->password = Hash::make($request->password);
-        $customer->usertype = 'user'; // Jika ada tipe user
-
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('public/foto/customer');
-            $customer->foto = $path;
+        if($request->hasFile('file')){
+            $path = $request->file('file');
+            $filename = time().'_'.$path->getClientOriginalName();
+            $path->storeAs('public/images/user', $filename);
+            $pathStore = '/storage/images/user/'.$filename;
+        }else{
+            $pathStore = '/storage/images/default.png';
         }
-
-        $customer->save();
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'foto' => $pathStore,
+            'usertype' => 'user',
+        ]);
 
         return redirect()->route('admin.user-customer.index')->with('success', 'Customer berhasil ditambahkan');
+    }
+
+    public function editCustomer(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8',
+            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Temukan customer yang ingin diedit
+        $user = User::findOrFail($id);
+
+        // Hapus foto customer sebelumnya jika ada
+        if ($user->foto !== '/storage/images/default.png' && Storage::exists(str_replace('/storage', 'public', $user->foto))) {
+            Storage::delete(str_replace('/storage', 'public', $user->foto));
+        }
+
+        // Perbarui data customer
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        // Perbarui password jika diisi dalam form
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // Perbarui foto jika file diunggah
+        if ($request->hasFile('file')) {
+            $path = $request->file('file');
+            $filename = time() . '_' . $path->getClientOriginalName();
+            $path->storeAs('public/images/user', $filename);
+            $pathStore = '/storage/images/user/' . $filename;
+            $user->foto = $pathStore;
+        }
+
+        // Simpan perubahan
+        $user->save();
+
+        return redirect()->route('admin.user-customer.index')->with('success', 'Customer berhasil diperbarui');
+    }
+
+    public function hapusCustomer($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('admin.user-customer.index')->with('error','Customer tidak ditemukan.');
+        }
+
+        $user->delete();
+        return redirect()->route('admin.user-customer.index')->with('success','Customer berhasil dihapus.');
     }
 }

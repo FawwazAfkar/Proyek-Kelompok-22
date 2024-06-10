@@ -10,4 +10,7 @@ class CarController extends Controller
     public function index(){
         return view('admin.mobil.index');
     }
+    public function tambahMobil(Request $request){
+        
+    }
 }
