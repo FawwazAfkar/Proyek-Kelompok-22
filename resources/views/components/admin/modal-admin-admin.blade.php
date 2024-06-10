@@ -11,9 +11,10 @@
             <div class="modal-body">
                 <form action="{{ route('admin.user-admin.tambah') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('post')
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control" id="nama" name="nama"
+                        <input type="text" class="form-control" id="name" name="name"
                             placeholder="Masukkan nama">
                     </div>
                     <div class="form-group">
@@ -30,8 +31,8 @@
                         <label for="file">Foto Profile</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="file" name="file">
-                                <label class="custom-file-label" for="file">Pilih file...</label>
+                                <input type="file" class="custom-file-label" id="file" name="file">
+                                <label class="custom-file-label" for="file" id="foto">Pilih file...</label>
                             </div>
                             <div class="input-group-append">
                                 <span class="input-group-text">Upload</span>

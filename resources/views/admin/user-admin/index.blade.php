@@ -48,7 +48,7 @@
                                     <td>{{ $admin->name }}</td>
                                     <td>{{ $admin->usertype }}</td>
                                     <td>{{ $admin->email }}</td>
-                                    <td><img src="{{ asset('lte/dist/img/user2-160x160.jpg') }}" alt="Foto Admin"
+                                    <td><img src="{{ asset($admin->foto) }}" alt="Foto Admin"
                                             class="img-circle img-size-32 mr-2"></td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"

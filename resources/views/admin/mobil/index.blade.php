@@ -41,24 +41,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</>
-                                <td>Avanza</td>
-                                <td>200000</td>
-                                <td>Mobil Keluarga</td>
-                                <td><img src="{{ asset('lte/dist/img/user2-160x160.jpg') }}" alt="Foto Mobil"
-                                        class="img-circle img-size-32 mr-2"></td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-edit">
-                                        <i class="fa-solid fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                                        data-target="#modal-hapus">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @foreach ($mobils as $mobil)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $mobil->nama }}</td>
+                                    <td>{{ $mobil->harga }}</td>
+                                    <td>{{ $mobil->deskripsi }}</td>
+                                    <td><img src="{{ asset('storage/' . $mobil->foto) }}" alt="Foto Mobil"
+                                            class="img-circle img-size-32 mr-2"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#edit{{ $mobil->id }}">
+                                            <i class="fa-solid fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            data-target="#delete{{ $mobil->id }}">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
