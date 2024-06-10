@@ -13,7 +13,13 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Home') }}
+                    </x-nav-link>
+                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.dashboard')">
+                        {{ __('Cars') }}
+                    </x-nav-link>
+                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.dashboard')">
+                        {{ __('About Us') }}
                     </x-nav-link>
                 </div>
             </div>
