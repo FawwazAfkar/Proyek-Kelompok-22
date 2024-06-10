@@ -9,7 +9,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{ route('admin.user-customer.tambah') }} " method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('post')
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input type="text" class="form-control" id="nama" placeholder="Enter your name">
