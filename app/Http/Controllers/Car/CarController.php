@@ -15,37 +15,35 @@ class CarController extends Controller
     }
     public function tambahMobil(Request $request){
 
-    $request->validate([
-        'namaMobil' => 'required|string|max:255',
-        'harga_sewa' => 'required|numeric',
-        'deskripsi' => 'required|string',
-        'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+        $request->validate([
+            'namaMobil' => 'required|string|max:255',
+            'harga_sewa' => 'required|numeric',
+            'deskripsi' => 'required|string',
+            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
 
+        if($request->hasFile('file')){
+            $path = $request->file('file');
+            $filename = time().'_'.$path->getClientOriginalName();
+            $path->storeAs('public/images/mobil', $filename);
+            $pathStore = '/storage/images/mobil/'.$filename;
+        }else{
+            $pathStore = '/storage/images/default.png';
+        }
 
-    if($request->hasFile('file')){
-        $path = $request->file('file');
-        $filename = time().'_'.$path->getClientOriginalName();
-        $path->storeAs('public/images/mobil', $filename);
-        $pathStore = '/storage/images/mobil/'.$filename;
-    }else{
-        $pathStore = '/storage/images/default.png';
+
+        $mobil = Car::create([
+            'nama_mobil' => $request->namaMobil,
+            'harga_sewa' => $request->harga_sewa,
+            'gambar' => $pathStore,
+            'status' => true,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+
+        return redirect()->route('admin.mobil.index')->with('success', 'Mobil berhasil ditambahkan');
     }
-
-
-
-    $mobil = Car::create([
-        'nama_mobil' => $request->namaMobil,
-        'harga_sewa' => $request->harga_sewa,
-        'gambar' => $pathStore,
-        'status' => true,
-        'deskripsi' => $request->deskripsi,
-    ]);
-
-
-    return redirect()->route('admin.mobil.index')->with('success', 'Mobil berhasil ditambahkan');
-}
 
     public function editMobil(Request $request, $id){
         $request->validate([

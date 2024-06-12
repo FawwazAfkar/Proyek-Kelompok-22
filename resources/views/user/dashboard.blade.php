@@ -41,9 +41,8 @@
             <div class="row justify-content-center g-4">
                 @foreach($recentCars as $car)
                 <div class="col-sm-4 col-md-3 mb-4">
-                    <x-userapp.cars-card :image="$car->image" :title="$car->nama_mobil" 
-                        :description="$car->deskripsi" 
-                        :price="$car->harga_sewa">
+                    <x-userapp.cars-card :image="$car->gambar" :title="$car->nama_mobil" 
+                        :description="$car->deskripsi" :price="$car->harga_sewa">
                         <x-primary-button class="btn-primary">Rent Now</x-primary-button>
                     </x-userapp.cars-card>
                 </div>
