@@ -48,6 +48,7 @@
                                     <td>{{ $mobil->nama_mobil }}</td>
                                     <td>{{ $mobil->harga_sewa }}</td>
                                     <td>{{ $mobil->deskripsi }}</td>
+
                                     <td><img src="{{ asset($mobil->gambar) }}" alt="Foto Mobil"
                                             class="img-circle img-size-32 mr-2"></td>
                                     <td>

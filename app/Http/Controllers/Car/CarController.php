@@ -14,7 +14,6 @@ class CarController extends Controller
         return view('admin.mobil.index', compact('mobils'));
     }
     public function tambahMobil(Request $request){
-
     $request->validate([
         'namaMobil' => 'required|string|max:255',
         'harga_sewa' => 'required|numeric',
@@ -22,18 +21,14 @@ class CarController extends Controller
         'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
-
-
     if($request->hasFile('file')){
         $path = $request->file('file');
         $filename = time().'_'.$path->getClientOriginalName();
         $path->storeAs('public/images/mobil', $filename);
-        $pathStore = '/storage/images/mobil/'.$filename;
+        $pathStore = 'storage/images/mobil/'.$filename; // No leading slash
     }else{
-        $pathStore = '/storage/images/default.png';
+        $pathStore = 'storage/images/default.png'; // No leading slash
     }
-
-
 
     $mobil = Car::create([
         'nama_mobil' => $request->namaMobil,
@@ -43,9 +38,9 @@ class CarController extends Controller
         'deskripsi' => $request->deskripsi,
     ]);
 
-
     return redirect()->route('admin.mobil.index')->with('success', 'Mobil berhasil ditambahkan');
 }
+
 
     public function editMobil(Request $request, $id){
         $request->validate([
@@ -68,7 +63,7 @@ class CarController extends Controller
                 $path = $request->file('file');
                 $filename = time().'_'.$path->getClientOriginalName();
                 $path->storeAs('public/images/mobil', $filename);
-                $pathStore = '/storage/images/mobil/'.$filename;
+                $pathStore = 'storage/images/mobil/'.$filename;
         }else{
             $pathStore = $mobil->gambar;
         }
@@ -86,8 +81,8 @@ class CarController extends Controller
 
     public function hapusMobil($id){
         $mobil = Car::find($id);
-        if ($mobil->gambar && $mobil->gambar != '/storage/images/default.png') {
-            $oldFilePath = str_replace('/storage', 'public', $mobil->gambar);
+        if ($mobil->gambar && $mobil->gambar != 'storage/images/default.png') {
+            $oldFilePath = str_replace('storage', 'public', $mobil->gambar);
             Storage::delete($oldFilePath);
         }
         $mobil->delete();
