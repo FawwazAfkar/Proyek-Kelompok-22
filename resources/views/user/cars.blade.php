@@ -8,8 +8,12 @@
                 <x-userapp.cars-card :image="$car->gambar" :title="$car->nama_mobil" 
                     :description="$car->deskripsi" 
                     :price="$car->harga_sewa">
-                    <x-primary-button class="btn-primary">Rent Now</x-primary-button>
+                    <div class="d-flex">
+                        <x-primary-button class="btn-primary mr-2">Detail</x-primary-button>
+                        <x-primary-button class="btn-primary" data-bs-toggle="modal" data-bs-target="#modal-transaksi{{ $car->id }}">Rent Now</x-primary-button>
+                    </div>
                 </x-userapp.cars-card>
+                <x-userapp.modal-user-transaksi :mobil="$car" :user="$user" />
             </div>
             @endforeach
         </div>
