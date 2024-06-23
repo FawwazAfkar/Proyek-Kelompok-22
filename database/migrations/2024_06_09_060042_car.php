@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_mobil');
             $table->integer('harga_sewa');
             $table->text('gambar');
-            $table->boolean('status')->default(true);
+            $table->boolean('ketersediaan')->default(true); //tersedia atau tidak
             $table->text('deskripsi');
             $table->timestamps();
         });

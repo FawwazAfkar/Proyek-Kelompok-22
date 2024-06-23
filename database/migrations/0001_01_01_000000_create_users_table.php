@@ -21,6 +21,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->string('foto')->default('/storage/images/default.png');
+            $table->string('kartu_identitas')->default('/storage/images/default.png');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
