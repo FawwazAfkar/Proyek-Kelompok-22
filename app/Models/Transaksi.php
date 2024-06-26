@@ -11,7 +11,7 @@ class Transaksi extends Model
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'user_id', 'car_id', 'tanggal_mulai', 'tanggal_selesai', 'total_biaya', 'status'
+        'user_id', 'car_id', 'tanggal_pemesanan','tanggal_mulai', 'tanggal_selesai', 'uang_muka', 'total_biaya', 'status'
     ];
 
     public function user()
@@ -24,3 +24,4 @@ class Transaksi extends Model
         return $this->belongsTo(Car::class);
     }
 }
+

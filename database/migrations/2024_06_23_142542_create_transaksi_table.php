@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksi', function (Blueprint $table) {
+        Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('car_id')->constrained('cars');
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
-            $table->decimal('total_biaya', 8, 2);
+            $table->date('tanggal_pemesanan')->nullable();
+            $table->date('tanggal_mulai')->nullable();
+            $table->date('tanggal_selesai')->nullable();
+            $table->integer('uang_muka');
+            $table->integer('total_biaya');
             $table->enum('status', ['pending', 'dibayar', 'selesai'])->default('pending');
             $table->timestamps();
         });
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('transaksis');
     }
 };

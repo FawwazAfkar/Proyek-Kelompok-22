@@ -16,6 +16,8 @@
                     <div class="mobild-body">
                         <div class="row">
                             <div class="col-md-6">
+                                <input type="hidden" name="mobil_id" value="{{ $mobil->id }}">
+                                <input type="hidden" name="user_id" value="{{ $user->id }}">
                                 <div class="form-group">
                                     <label for="fotoMobil">Foto Mobil</label>
 
@@ -52,9 +54,9 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="total_harga">Total</label>
-                                            <input type="text" class="form-control" id="total_harga{{ $mobil->id }}" name="total_harga"
-                                                readonly />
+                                            <label for="total_biaya">Total</label>
+                                            <input type="text" class="form-control" id="total_biaya{{ $mobil->id }}" name="total_biaya"
+                                                readonly value="">
                                         </div>
                                     </div>
                                 </div>
@@ -71,16 +73,17 @@
                         </div>
 
                     </div>
-                </form>
+               
             </div>
             <div class="modal-footer justify-content-end">
                 <div class="mr-3">
                     <label>Jumlah DP : </label>
-                    <span id="dp{{ $mobil->id }}"></span>
+                    <input type="text" id="dp{{ $mobil->id }}" readonly name="dp" value="">
                 </div>
-                <x-primary-button type="button" class="btn btn-default" data-bs-dismiss="modal">Konfirmasi</x-primary-button>
+                <x-primary-button type="submit" class="btn btn-default" data-bs-dismiss="modal">Konfirmasi</x-primary-button>
             </div>
-        </div>
+        </div> 
+    </form>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
@@ -90,8 +93,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const jumlahHariInput = document.getElementById('jumlah_hari{{ $mobil->id }}');
-        const totalHargaInput = document.getElementById('total_harga{{ $mobil->id }}');
-        const dpSpan = document.getElementById('dp{{ $mobil->id }}');
+        const totalHargaInput = document.getElementById('total_biaya{{ $mobil->id }}');
+        const dp = document.getElementById('dp{{ $mobil->id }}');
         const hargaSewa = {{ $mobil->harga_sewa }};
 
         function formatRupiah(number){
@@ -101,13 +104,13 @@
         // Mengatur nilai awal berdasarkan placeholder
         const jumlahHariAwal = jumlahHariInput.placeholder || 1;
         totalHargaInput.value = formatRupiah(jumlahHariAwal * hargaSewa);
-        dpSpan.textContent = formatRupiah(jumlahHariAwal * hargaSewa * 0.5);
+        dp.value = formatRupiah(jumlahHariAwal * hargaSewa * 0.5);
 
         jumlahHariInput.addEventListener('input', function () {
             const jumlahHari = this.value || jumlahHariAwal; 
             const totalHarga = jumlahHari * hargaSewa;
             totalHargaInput.value = formatRupiah(totalHarga);
-            dpSpan.textContent = formatRupiah(totalHarga * 0.5);
+            dp.value = formatRupiah(totalHarga * 0.5);
         });
     });
 </script>
