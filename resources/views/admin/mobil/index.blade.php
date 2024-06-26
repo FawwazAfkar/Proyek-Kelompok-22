@@ -52,7 +52,7 @@
                                     <td><img src="{{ asset($mobil->gambar) }}" alt="Foto Mobil"
                                             class="img-circle img-size-32 mr-2"></td>
                                     <td>
-                                        @if ($mobil->status)
+                                        @if ($mobil->ketersediaan)
                                             <span class="badge badge-success">Tersedia</span>
                                         @else
                                             <span class="badge badge-danger">Tidak Tersedia</span>

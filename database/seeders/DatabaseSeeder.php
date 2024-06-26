@@ -16,11 +16,21 @@ class DatabaseSeeder extends Seeder
     {
 
         User::create([
-            'name' => 'Admin User',
-            'email' => 'admin77@gmail.com',
+            'name' => 'User',
+            'email' => 'rendygacor34@gmail.com',
+            'usertype' => 'user',
+            'password' => Hash::make('rendyan34'),
+            'foto' => '/storage/images/default.png',
+            'kartu_identitas' => NULL
+        ]);
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
             'usertype' => 'admin',
             'password' => Hash::make('admin123'),
-            'foto' => '/storage/images/default.png'
+            'foto' => '/storage/images/default.png',
+            'kartu_identitas' => NULL
         ]);
 
     }

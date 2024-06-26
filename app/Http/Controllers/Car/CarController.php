@@ -37,7 +37,7 @@ class CarController extends Controller
             'nama_mobil' => $request->namaMobil,
             'harga_sewa' => $request->harga_sewa,
             'gambar' => $pathStore,
-            'status' => true,
+            'ketersediaan' => true,
             'deskripsi' => $request->deskripsi,
         ]);
 
@@ -75,7 +75,7 @@ class CarController extends Controller
             'nama_mobil' => $request->namaMobil,
             'harga_sewa' => $request->harga_sewa,
             'gambar' => $pathStore,
-            'status' => true,
+            'ketersediaan' => true,
             'deskripsi' => $request->deskripsi,
         ]);
 

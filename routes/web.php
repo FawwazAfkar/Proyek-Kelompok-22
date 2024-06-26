@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/pesanan', [TransaksiController::class, 'pesanan'])->name('user.pesanan');
 
 });
 
@@ -28,6 +29,9 @@ Route::middleware(['auth' , 'userMiddleware'])->group(function(){
     Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/cars', [UserController::class, 'cars'])->name('user.cars');
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('user.transaksi.store');
+    Route::put('/transaksi/bukti', [TransaksiController::class, 'updateBukti'])->name('user.transaksi.updateBukti');
+    
+
 
 });
 // admin
