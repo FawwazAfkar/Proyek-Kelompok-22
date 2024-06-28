@@ -11,12 +11,17 @@ class UserController extends Controller
 {
     public function index(){
         $recentCars = Car::latest()->take(3)->get();
-        return view('user.dashboard', compact('recentCars'));
+        $user = User::find(auth()->user()->id);
+        return view('user.dashboard', compact('recentCars','user'));
     }
 
     public function cars(){
         $cars = Car::all();
         $user = User::find(auth()->user()->id);
         return view('user.cars', compact('cars', 'user'));
+    }
+
+    public function about(){
+        return view('user.about');
     }
 }

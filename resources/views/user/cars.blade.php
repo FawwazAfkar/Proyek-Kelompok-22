@@ -9,10 +9,11 @@
                     :description="$car->deskripsi" 
                     :price="$car->harga_sewa">
                     <div class="d-flex">
-                        <x-primary-button class="btn-primary mr-2">Detail</x-primary-button>
-                        <x-primary-button class="btn-primary" data-bs-toggle="modal" data-bs-target="#modal-transaksi{{ $car->id }}">Rent Now</x-primary-button>
+                        <x-secondary-button class="btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#modal-detail-mobil{{ $car->id }}">Detail</x-secondary-button>
+                        <x-primary-button class="btn-primary" data-bs-toggle="modal" data-bs-target="#modal-transaksi{{ $car->id }}">Sewa Sekarang</x-primary-button>
                     </div>
                 </x-userapp.cars-card>
+                <x-userapp.modal-detail-mobil :mobil="$car" />
                 <x-userapp.modal-user-transaksi :mobil="$car" :user="$user" />
             </div>
             @endforeach
