@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-gray-800 border-b border-gray-800">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,20 +6,20 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-9 w-auto fill-current text-white" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.dashboard')">
-                        {{ __('Home') }}
+                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.dashboard')" class="text-white">
+                        {{ __('Beranda') }}
                     </x-nav-link>
-                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.cars')">
-                        {{ __('Cars') }}
+                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.cars')" class="text-white">
+                        {{ __('Mobil') }}
                     </x-nav-link>
-                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.about')">
-                        {{ __('About Us') }}
+                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.about')" class="text-white">
+                        {{ __('Tentang Kami') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -28,8 +28,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -44,23 +43,28 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('user.pesanan')">
-                            {{ __('Pesanan') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                        <div class="space-y-1">
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profil') }}
                             </x-dropdown-link>
-                        </form>
+                            <x-dropdown-link :href="route('user.pesanan')">
+                                {{ __('Pesanan') }}
+                            </x-dropdown-link>
+                        </div>
+                        <div class="border-t border-gray-200 my-2"></div>
+                        <div class="space-y-1">
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                    this.closest('form').submit();"
+                                    class="text-red-500 hover:text-red-700">
+                                    {{ __('Keluar') }}
+                                </x-dropdown-link>
+                            </form>
+                        </div>
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -83,32 +87,45 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+        <div class="pt-2 pb-2 space-y-1">
             <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Beranda') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.cars')" :active="request()->routeIs('user.cars')">
+                {{ __('Mobil') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.about')" :active="request()->routeIs('user.about')">
+                {{ __('Tentang Kami') }}
             </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
+        <div class="pt-2 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-semibold text-base text-gray-800">{{ Auth::user()->name }}</div>
+                <div class="font-semibold text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Profil') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('user.pesanan')">
+                    {{ __('Pesanan') }}
+                </x-responsive-nav-link>
+            </div>
+        </div>
 
-                <!-- Authentication -->
+        <!-- Responsive Logout Button -->
+        <div class="pt-2 pb-2 border-t border-gray-200">
+            <div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                                        this.closest('form').submit();"
+                        class="text-red-500">
+                        {{ __('Keluar') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

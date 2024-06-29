@@ -2,8 +2,10 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('Pesanan Anda') }}</div>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <span class="font-semibold">{{ __('Pesanan Anda') }}</span>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <ul class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -137,3 +139,4 @@
         </div>
     </div>
 </x-app-layout>
+
