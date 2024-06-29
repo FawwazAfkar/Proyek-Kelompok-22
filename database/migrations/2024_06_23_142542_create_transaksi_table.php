@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('tanggal_selesai')->nullable();
             $table->integer('uang_muka');
             $table->integer('total_biaya');
+            $table->string('foto_bukti')->nullable();
             $table->enum('status', ['pending', 'dibayar', 'selesai'])->default('pending');
             $table->timestamps();
         });

@@ -82,4 +82,31 @@ class TransaksiController extends Controller
         return redirect()->route('user.pesanan')->with('success', 'Transaksi berhasil');
 
     }
+
+    // public function uploadBukti(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    //     ]);
+
+    //     $transaksi = Transaksi::findOrFail($id);
+
+    //     if ($transaksi->foto_bukti !== NULL && Storage::exists(str_replace('/storage', 'public', $transaksi->foto_bukti))) {
+    //         Storage::delete(str_replace('/storage', 'public', $transaksi->foto_bukti));
+    //     }
+
+    //     if($request->hasFile('file')){
+    //         $path = $request->file('file');
+    //         $filename = time().'_'.$path->getClientOriginalName();
+    //         $path->storeAs('public/images/transaksi', $filename);
+    //         $pathStore = '/storage/images/transaksi/'.$filename;
+    //     }else{
+    //         $pathStore = NULL;
+    //     }
+
+    //     $transaksi->foto_bukti = $pathStore;
+    //     $transaksi->update();
+
+    //     return redirect()->route('user.pesanan')->with('success', 'Upload Bukti Transfer berhasil');
+    // }
 }

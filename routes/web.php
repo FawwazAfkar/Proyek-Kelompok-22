@@ -28,9 +28,9 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth' , 'userMiddleware'])->group(function(){
     Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/cars', [UserController::class, 'cars'])->name('user.cars');
-    Route::get('about', [UserController::class,'about'])->name('user.about');
+    Route::get('/about', [UserController::class,'about'])->name('user.about');
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('user.transaksi.store');
-    Route::put('/transaksi/bukti', [TransaksiController::class, 'updateBukti'])->name('user.transaksi.updateBukti');
+    Route::post('/transaksi/uploadBukti/{id}', [TransaksiController::class, 'uploadBukti'])->name('user.pesanan.uploadBukti');
     
 
 
