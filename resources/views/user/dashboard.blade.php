@@ -3,7 +3,7 @@
         <div class="container" style="color: white">
             <h1>Car Rent Website</h1>
             <p class="mb-4">Explore our fleet of cars and book your ride today!</p>
-            <x-primary-button href="#" class="btn-lg">Get Started</x-primary-button>
+            <x-primary-button class="btn-primary" onclick="location.href='{{ route('user.cars') }}'">Get Started</x-primary-button>
         </div>
     </section>      
     <section class="features py-5 bg-light">
@@ -32,7 +32,7 @@
         <div class="container text-center">
             <h2>Ready to Rent?</h2>
             <p>Search for your perfect ride and book now!</p>
-            <x-primary-button href="#" class="btn-primary">Search Cars</x-primary-button>
+            <x-primary-button class="btn-primary" onclick="location.href='{{ route('user.cars') }}'">Search Cars</x-primary-button>
         </div>
     </section>        
     <section class="cars">
@@ -42,9 +42,15 @@
                 @foreach($recentCars as $car)
                 <div class="col-sm-4 col-md-3 mb-4">
                     <x-userapp.cars-card :image="$car->gambar" :title="$car->nama_mobil" 
-                        :description="$car->deskripsi" :price="$car->harga_sewa">
-                        <x-primary-button class="btn-primary">Rent Now</x-primary-button>
+                        :description="$car->deskripsi" 
+                        :price="$car->harga_sewa">
+                        <div class="d-flex">
+                            <x-secondary-button class="btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#modal-detail-mobil{{ $car->id}}">Detail</x-secondary-button>
+                            <x-primary-button class="btn-primary" data-bs-toggle="modal" data-bs-target="#modal-transaksi{{ $car->id }}">Sewa Sekarang</x-primary-button>
+                        </div>
                     </x-userapp.cars-card>
+                    <x-userapp.modal-detail-mobil :mobil="$car" />
+                    <x-userapp.modal-user-transaksi :mobil="$car" :user="$user" />
                 </div>
                 @endforeach
             </div>

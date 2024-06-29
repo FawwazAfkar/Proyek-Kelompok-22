@@ -18,7 +18,7 @@
                     <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.cars')">
                         {{ __('Cars') }}
                     </x-nav-link>
-                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.dashboard')">
+                    <x-nav-link :href="Auth::user()->usertype === 'admin' ? route('admin.dashboard') : route('user.about')">
                         {{ __('About Us') }}
                     </x-nav-link>
                 </div>

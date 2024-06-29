@@ -50,16 +50,12 @@
                                                     <span class="badge bg-warning text-dark">Pending</span>
                                                 </td>
                                                 <td>
-                                                    <form action="" method="post">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <input type="file" name="bukti_pembayaran" class="form-control" id="bukti_pembayaran">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Unggah
-                                                        </button>
-                                                    </form>
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-upload-bukti{{ $item->id }}">
+                                                        Unggah
+                                                    </button>
                                                 </td>
                                             </tr>
+                                            <x-userapp.modal-upload-bukti :transaksi="$item" />
                                             @endif
                                             @endforeach
                                         </tbody>
@@ -77,7 +73,6 @@
                                                 <th>Uang Muka</th>
                                                 <th>Total Biaya</th>
                                                 <th>Status</th>
-                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -93,15 +88,6 @@
                                                 <td>{{ $item->total_biaya }}</td>
                                                 <td>
                                                     <span class="badge bg-primary text-light">Dibayar</span>
-                                                </td>
-                                                <td>
-                                                    <form action="" method="post">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="btn btn-secondary">
-                                                            Konfirmasi
-                                                        </button>
-                                                    </form>
                                                 </td>
                                             </tr>
                                             @endif
@@ -121,7 +107,6 @@
                                                 <th>Uang Muka</th>
                                                 <th>Total Biaya</th>
                                                 <th>Status</th>
-                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -137,15 +122,6 @@
                                                 <td>{{ $item->total_biaya }}</td>
                                                 <td>
                                                     <span class="badge bg-success text-light">Selesai</span>
-                                                </td>
-                                                <td>
-                                                    <form action="" method="post">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="btn btn-success">
-                                                            Detail
-                                                        </button>
-                                                    </form>
                                                 </td>
                                             </tr>
                                             @endif
