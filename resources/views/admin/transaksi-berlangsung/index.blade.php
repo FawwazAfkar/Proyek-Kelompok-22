@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title flex-start">DataTable with default features</h3>
+                    <h3 class="card-title flex-start">Transaksi Berlangsung</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -25,58 +25,79 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Pembeli</th>
+                                <th>Nama User</th>
                                 <th>Jenis Mobil</th>
                                 <th>Foto Identitas</th>
                                 <th>Jumlah hari</th>
                                 <th>Total(Rp)</th>
+                                <th>Total DP</th>
                                 <th>Bukti Pembayaran</th>
-
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>John Doe</td>
-                                <td>Toyota Avanza</td>
-                                <td>
-                                    <img src="{{ asset('img/identitas.jpg') }}" alt="Foto Identitas" class="img-thumbnail"
-                                        width="100">
-                                </td>
-                                <td>3 hari</td>
-                                <td>1.500.000</td>
-                                <td>
-                                    <img src="{{ asset('img/bukti-pembayaran.jpg') }}" alt="Bukti Pembayaran"
-                                        class="img-thumbnail" width="100">
-                                </td>
-                                <td class="d-flex justify-content-center">
-                                    {{-- detail --}}
-                                    <button type="button" class="btn btn-primary mr-4" data-toggle="modal"
-                                        data-target="#modal-detail">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    {{-- acc --}}
-                                    <button type="button" class="btn btn-success" data-toggle="modal"
-                                        data-target="#modal-acc">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                                        data-target="#modal-batal">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @php $no = 1; @endphp
+                            @foreach($transaksis as $transaction)
+                            @if($transaction->status == 'pending'|| $transaction->status == 'dibayar')
+                                <tr>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $transaction->nama_user }}</td>
+                                    <td>{{ $transaction->nama_mobil }}</td>
+                                    <td>
+                                        <img src="{{ asset($transaction->kartu_identitas) }}" alt="Foto Identitas" class="img-thumbnail" width="100">
+                                    </td>
+                                    <td>{{ $transaction->jumlah_hari }} hari</td>
+                                    <td>{{ $transaction->harga_sewa }}</td>
+                                    <td>{{ $transaction->uang_muka}}</td>
+                                    <td>
+                                        <img src="{{ asset($transaction->bukti_pembayaran) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
+                                    </td>
+                                    <td>
+                                        @if($transaction->status == 'pending')
+                                            <span class="badge badge-warning">{{ $transaction->status }}</span>
+                                        @elseif($transaction->status == 'dibayar')
+                                            <span class="badge badge-success">{{ $transaction->status }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="d-flex justify-content-center">
+                                        {{-- detail --}}
+                                        <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#modal-detail{{ $transaction->id }}">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        {{-- acc --}}
+                                        @if($transaction->status == 'pending')
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-acc{{ $transaction->id }}">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-batal{{ $transaction->id }}">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        @elseif($transaction->status == 'dibayar')
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-selesai{{ $transaction->id }}">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <x-admin.modal-detail-transaksi :transaction="$transaction" />
+                                <x-admin.modal-acc-transaksi :transaction="$transaction" />
+                                <x-admin.modal-batalkan-transaksi :transaction="$transaction" />
+                                <x-admin.modal-selesai-transaksi :transaction="$transaction" />
+                            @endif
+                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Pembeli</th>
+                                <th>Nama User</th>
                                 <th>Jenis Mobil</th>
                                 <th>Foto Identitas</th>
                                 <th>Jumlah hari</th>
                                 <th>Total(Rp)</th>
+                                <th>Total DP</th>
                                 <th>Bukti Pembayaran</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </tfoot>
@@ -86,6 +107,6 @@
             </div>
             <!-- /.card -->
         </div>
-        <x-admin.modal-transaksi-berlangsung />
     </div>
 @endsection
+
