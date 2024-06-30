@@ -46,7 +46,7 @@
                                 <td>
                                     <img src="{{ asset($transaction->kartu_identitas) }}" alt="Foto Identitas" class="img-thumbnail" width="100">
                                 </td>
-                                <td>{{ $transaction->jumlah_hari }} hari</td>
+                                <td>{{ $transaction->jumlah_hari }}</td>
                                 <td>{{ $transaction->harga_sewa }}</td>
                                 <td>{{ $transaction->uang_muka}}</td>
                                 <td>
@@ -63,7 +63,7 @@
                                 </td>
                             </tr>
                         @endif
-                        <x-admin.modal-riwayat-transaksi :transaction="$transaction" />
+                        <x-admin.modal-detail-transaksi :transaction="$transaction" />
                         @endforeach
                         </tr>
                         
