@@ -75,7 +75,7 @@ class TransaksiController extends Controller
         $dp = preg_replace('/[^0-9]/', '', $request->input('dp'))/100;
         $total_biaya = preg_replace('/[^0-9]/', '', $request->input('total_biaya'))/100;
 
-       $transaksi = Transaksi::create([
+        $transaksi = Transaksi::create([
         'user_id' => $user_id,
         'car_id' => $mobil_id,
         'tanggal_pemesanan' => now()->toDate(),
@@ -85,36 +85,12 @@ class TransaksiController extends Controller
         'total_biaya' => $total_biaya,
         'status' => 'pending',
         'bukti_pembayaran' => NULL,
-       ]);
+        ]);
 
         return redirect()->route('user.pesanan')->with('success', 'Transaksi berhasil');
 
     }
 
-    public function updateStatusBayar($id)
-    {
-        $transaksi = Transaksi::findOrFail($id);
-        $transaksi->status = 'dibayar';
-        $transaksi->save();
-        return redirect()->route('admin.transaksi-berlangsung.index')->with('success', 'Status transaksi berhasil diperbarui');
-    }
-
-    public function hapusTransaksi($id)
-    {
-        $transaksi = Transaksi::findOrFail($id);
-        $transaksi->delete();
-        return redirect()->route('admin.transaksi-berlangsung.index')->
-        with('success', 'Transaksi berhasil dihapus');
-    }
-
-
-    public function updateStatusSelesai($id)
-    {
-        $transaksi = Transaksi::findOrFail($id);
-        $transaksi->status = 'selesai';
-        $transaksi->save();
-        return redirect()->route('admin.riwayat-transaksi.index')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
-    }
     // public function uploadBukti(Request $request, $id)
     // {
     //     $request->validate([
@@ -141,4 +117,30 @@ class TransaksiController extends Controller
 
     //     return redirect()->route('user.pesanan')->with('success', 'Upload Bukti Transfer berhasil');
     // }
+
+    public function updateStatusBayar($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = 'dibayar';
+        $transaksi->save();
+        return redirect()->route('admin.transaksi-berlangsung.index')->with('success', 'Status transaksi berhasil diperbarui');
+    }
+
+    public function hapusTransaksi($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->delete();
+        return redirect()->route('admin.transaksi-berlangsung.index')->
+        with('success', 'Transaksi berhasil dihapus');
+    }
+
+
+    public function updateStatusSelesai($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = 'selesai';
+        $transaksi->save();
+        return redirect()->route('admin.riwayat-transaksi.index')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
+    }
+    
 }

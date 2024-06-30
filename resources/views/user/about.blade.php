@@ -1,6 +1,6 @@
 <x-app-layout>
-    <section class="about py-5 h-screen">
-        <div class="container h-auto mt-12">
+    <section class="about py-5 flex-grow-1">
+        <div class="container h-auto" style="margin-top: 2.5rem">
             <h2 class="text-center mb-4">Tentang Kami</h2>
             <p class="text-center">Selamat datang di layanan sewa mobil kami! Kami adalah tim yang berdedikasi untuk memberikan Anda pengalaman penyewaan mobil terbaik. Misi kami adalah membuat perjalanan Anda lebih lancar dan menyenangkan.</p>
             <div class="row justify-content-center mt-4">

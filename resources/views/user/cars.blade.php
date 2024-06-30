@@ -1,6 +1,6 @@
 <x-app-layout>
     <section class="cars py-5 flex-grow-1">
-        <div class="container h-auto mt-12">
+        <div class="container h-auto" style="margin-top: 2.5rem">
             <h2 class="text-center mb-12 text-dark font-bold" style="font-size: 2rem">Daftar Mobil Kami</h2>
             <div class="row justify-content-center g-4">
                 @foreach($cars as $car)
