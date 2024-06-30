@@ -9,4 +9,4 @@
 
 ## About This Website
 
-<h2>Website Rental Mobil dengan Fitur yang sangat memudahkan pengguna</h2>
+<p>Website Rental Mobil dengan Fitur yang sangat memudahkan pengguna</p>
