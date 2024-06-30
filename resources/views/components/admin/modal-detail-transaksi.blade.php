@@ -16,8 +16,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="fotoMobil">Foto Mobil</label>
-
-                                    <img src="https://cdn.motor1.com/images/mgl/MkO9NN/s1/future-supercars.webp"
+                                    
+                                    <img src="{{ asset($transaction->gambar_mobil) }}"
                                         class="img-fluid overflow-hidden rounded-sm" alt="Responsive image"
                                         width="100%">
 
@@ -26,41 +26,39 @@
                                     <label for="buktiTransaksi">
                                         Bukti Transaksi
                                     </label>
-
-                                    <img src="https://cdn.motor1.com/images/mgl/MkO9NN/s1/future-supercars.webp"
-                                        class="img-fluid overflow-hidden rounded-sm" alt="Responsive image"
-                                        width="100%">
+                                    <img src="{{ asset($transaction->bukti_pembayaran) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
                                 </div>
                             </div>
                             <div class="col-md-6">
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Foto Kartu Identitas</label>
-                                    <img src="{{ asset('img/identitas.jpg') }}" alt="Foto Identitas"
-                                        class="img-thumbnail" width="100">
+                                    <img src="{{ asset($transaction->kartu_identitas) }}" alt="Foto Identitas" class="img-thumbnail" width="100">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nama Customer</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1"
-                                        placeholder="ex Avanza Toyota" readonly>
+                                    readonly value="{{ $transaction->nama_user }}">
+                                    </input>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Jenis Mobil</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1"
-                                        placeholder="ex Avanza Toyota" readonly>
+                                    readonly value="{{ $transaction->nama_mobil }}"/>
+                                    </input>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6"><label for="exampleInputEmail1">Jumlah Hari</label>
                                             <input type="text" class="form-control" id="exampleInputEmail1"
-                                                placeholder="ex Avanza Toyota" readonly>
+                                            readonly value="{{ $transaction->jumlah_hari }}" />
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="exampleInputEmail1">Total</label>
                                             <input type="text" class="form-control" id="exampleInputEmail1"
-                                                readonly />
-
+                                            readonly value="{{ $transaction->harga_sewa }}"/>
+                                            </input>
                                         </div>
                                     </div>
                                 </div>
