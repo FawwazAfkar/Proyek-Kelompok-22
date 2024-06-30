@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Car;
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
@@ -27,17 +28,17 @@ class TransaksiController extends Controller
         return view("admin.riwayat-transaksi.index", compact('transaksis') );
     }
     public function pesanan(){
-       // join table cars, transaksi
-        $pesanan = DB::table('transaksis')
+        $userLogin = Auth::user(); 
+        $pesanan = Transaksi::select('transaksis.*', 'cars.nama_mobil', 'cars.deskripsi')
             ->join('cars', 'transaksis.car_id', '=', 'cars.id')
-            ->select('transaksis.*', 'cars.*')
+            ->where('user_id', $userLogin->id)
             ->get();
-
-            return view('user.pesanan', compact('pesanan'));    
+        return view('user.pesanan', compact('pesanan'));    
     }
+    
 
     public function store(Request $request)
-{
+    {
     $request->validate([
         'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
     ]);
@@ -96,32 +97,39 @@ class TransaksiController extends Controller
 }
 
 
-    public function uploadBukti(Request $request, $id)
-    {
-        $request->validate([
-            'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+public function uploadBukti(Request $request, $id)
+{
+    $request->validate([
+        'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
 
-        $transaksi = Transaksi::findOrFail($id);
+    $pathStore = NULL;
 
-        if ($transaksi->foto_bukti !== NULL && Storage::exists(str_replace('/storage', 'public', $transaksi->foto_bukti))) {
-            Storage::delete(str_replace('/storage', 'public', $transaksi->foto_bukti));
-        }
-
-        if($request->hasFile('bukti_pembayaran')){
-            $path = $request->file('bukti_pembayaran');
-            $filename = time().'_'.$path->getClientOriginalName();
-            $path->storeAs('public/images/transaksi', $filename);
-            $pathStore = '/storage/images/transaksi/'.$filename;
-        }else{
-            $pathStore = NULL;
-        }
-
-        $transaksi->foto_bukti = $pathStore;
-        $transaksi->save();
-
-        return redirect()->route('user.pesanan')->with('success', 'Upload Bukti Transfer berhasil');
+    if ($request->hasFile('bukti_pembayaran')) {
+        $path = $request->file('bukti_pembayaran');
+        $filename = time() . '_' . $path->getClientOriginalName();
+        $path->storeAs('public/images/transaksi', $filename);
+        $pathStore = '/storage/images/transaksi/' . $filename;
     }
+
+    // Find the transaction
+    $transaksi = Transaksi::findOrFail($id);
+
+    // Delete previous payment proof image if it exists
+    if ($transaksi->foto_bukti !== NULL && Storage::exists(str_replace('/storage', 'public', $transaksi->foto_bukti))) {
+        Storage::delete(str_replace('/storage', 'public', $transaksi->foto_bukti));
+    }
+
+    // Update transaction payment proof image
+    if ($pathStore !== NULL) {
+        $transaksi->foto_bukti = $pathStore;
+    }
+
+    $transaksi->save();
+
+    return redirect()->route('user.pesanan')->with('success', 'Upload Bukti Transfer berhasil');
+}
+
 
     public function updateStatusBayar($id)
     {
