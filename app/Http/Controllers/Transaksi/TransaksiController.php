@@ -96,15 +96,15 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->status = 'dibayar';
         $transaksi->save();
-        return redirect()->route('user.pesanan')->with('success', 'Status transaksi berhasil diperbarui');
+        return redirect()->route('admin.transaksi-berlangsung.index')->with('success', 'Status transaksi berhasil diperbarui');
     }
 
-    public function updateStatusCancel($id)
+    public function hapusTransaksi($id)
     {
         $transaksi = Transaksi::findOrFail($id);
-        $transaksi->status = 'selesai';
-        $transaksi->save();
-        return redirect()->route('user.pesanan')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
+        $transaksi->delete();
+        return redirect()->route('admin.transaksi-berlangsung.index')->
+        with('success', 'Transaksi berhasil dihapus');
     }
 
 
@@ -113,7 +113,7 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->status = 'selesai';
         $transaksi->save();
-        return redirect()->route('user.pesanan')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
+        return redirect()->route('admin.riwayat-transaksi.index')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
     }
     // public function uploadBukti(Request $request, $id)
     // {

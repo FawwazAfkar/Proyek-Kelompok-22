@@ -57,12 +57,13 @@
                                 </td>
                                 <td class="d-flex justify-content-center">
                                     {{-- detail --}}
-                                    <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#modal-detail">
+                                    <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#modal-detail{{ $transaction->id }}">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </td>
                             </tr>
                         @endif
+                        <x-admin.modal-riwayat-transaksi :transaction="$transaction" />
                         @endforeach
                         </tr>
                         
@@ -87,6 +88,5 @@
         </div>
         <!-- /.card -->
     </div>
-    <x-admin.modal-transaksi-berlangsung />
 </div>
 @endsection

@@ -32,14 +32,16 @@
                                 <th>Total(Rp)</th>
                                 <th>Total DP</th>
                                 <th>Bukti Pembayaran</th>
-
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php $no = 1; @endphp
                             @foreach($transaksis as $transaction)
+                            @if($transaction->status == 'pending'|| $transaction->status == 'dibayar')
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $no++ }}</td>
                                     <td>{{ $transaction->nama_user }}</td>
                                     <td>{{ $transaction->nama_mobil }}</td>
                                     <td>
@@ -51,21 +53,38 @@
                                     <td>
                                         <img src="{{ asset($transaction->bukti_pembayaran) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
                                     </td>
+                                    <td>
+                                        @if($transaction->status == 'pending')
+                                            <span class="badge badge-warning">{{ $transaction->status }}</span>
+                                        @elseif($transaction->status == 'dibayar')
+                                            <span class="badge badge-success">{{ $transaction->status }}</span>
+                                        @endif
+                                    </td>
                                     <td class="d-flex justify-content-center">
                                         {{-- detail --}}
-                                        <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#modal-detail">
+                                        <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#modal-detail{{ $transaction->id }}">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                         {{-- acc --}}
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-acc">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-batal">
-                                            <i class="fas fa-times"></i>
-                                        </button>
+                                        @if($transaction->status == 'pending')
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-acc{{ $transaction->id }}">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-batal{{ $transaction->id }}">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        @elseif($transaction->status == 'dibayar')
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-selesai{{ $transaction->id }}">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
-                            <x-admin.modal-transaksi-berlangsung :transaction = "$transaction" />
+                                <x-admin.modal-detail-transaksi :transaction="$transaction" />
+                                <x-admin.modal-acc-transaksi :transaction="$transaction" />
+                                <x-admin.modal-batalkan-transaksi :transaction="$transaction" />
+                                <x-admin.modal-selesai-transaksi :transaction="$transaction" />
+                            @endif
                             @endforeach
                         </tbody>
                         <tfoot>
@@ -78,6 +97,7 @@
                                 <th>Total(Rp)</th>
                                 <th>Total DP</th>
                                 <th>Bukti Pembayaran</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </tfoot>
@@ -87,7 +107,6 @@
             </div>
             <!-- /.card -->
         </div>
-
-        
     </div>
 @endsection
+
