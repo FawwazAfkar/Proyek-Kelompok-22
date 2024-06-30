@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('car_id')->constrained('cars');
             $table->date('tanggal_pemesanan')->nullable();
+            $table->integer('jumlah_hari')->nullable();
             $table->date('tanggal_mulai')->nullable();
             $table->date('tanggal_selesai')->nullable();
             $table->integer('uang_muka');

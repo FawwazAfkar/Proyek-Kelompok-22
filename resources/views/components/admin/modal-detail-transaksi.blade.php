@@ -26,7 +26,7 @@
                                     <label for="buktiTransaksi">
                                         Bukti Transaksi
                                     </label>
-                                    <img src="{{ asset($transaction->bukti_pembayaran) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
+                                    <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
                                 </div>
                             </div>
                             <div class="col-md-6">
