@@ -51,7 +51,7 @@
                                     <td>{{ $transaction->harga_sewa }}</td>
                                     <td>{{ $transaction->uang_muka}}</td>
                                     <td>
-                                        <img src="{{ asset($transaction->bukti_pembayaran) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
+                                        <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
                                     </td>
                                     <td>
                                         @if($transaction->status == 'pending')

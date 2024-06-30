@@ -46,12 +46,9 @@
                 <div class="col-sm-4 col-md-3 mb-4">
                     <x-userapp.cars-card :image="$car->gambar" :title="$car->nama_mobil" 
                         :description="$car->deskripsi" 
-                        :price="$car->harga_sewa">
-                        <div class="d-flex flex-column flex-md-row">
-                            <x-secondary-button class="btn-secondary mb-2 mb-md-0 mr-2 mr-md-2" data-bs-toggle="modal" data-bs-target="#modal-detail-mobil{{ $car->id }}">Detail</x-secondary-button>
-                            <x-primary-button class="btn-primary" data-bs-toggle="modal" data-bs-target="#modal-transaksi{{ $car->id }}">Sewa Sekarang</x-primary-button>
-                        </div>
-                        
+                        :price="$car->harga_sewa"
+                        :carid="$car->id"
+                        :ketersediaan="$car->ketersediaan">                  
                     </x-userapp.cars-card>
                     <x-userapp.modal-detail-mobil :mobil="$car" />
                     <x-userapp.modal-user-transaksi :mobil="$car" :user="$user" />

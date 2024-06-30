@@ -15,11 +15,10 @@
                 <form action="{{ route('user.pesanan.uploadBukti', $transaksi->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="transaksi_id" value="{{ $transaksi->id }}">
                     <input type="file" name="bukti_pembayaran" class="form-control" id="bukti_pembayaran" onchange="previewImage(this, 'imgPreview{{ $transaksi->id }}')">
-                    <x-secondary-button type="submit" class="btn btn-secondary mt-3">
+                    <x-primary-button type="submit" class="btn btn-primary mt-3">
                         Unggah
-                    </x-secondary-button>
+                    </x-primary-button>
                 </form>
             </div>
         </div>

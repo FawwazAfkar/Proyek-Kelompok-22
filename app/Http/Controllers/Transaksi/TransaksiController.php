@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\Car;
 use App\Models\Transaksi;
 use Illuminate\Support\Facades\DB;
 
@@ -74,8 +75,9 @@ class TransaksiController extends Controller
         $mobil_id = $request->input('mobil_id');
         $dp = preg_replace('/[^0-9]/', '', $request->input('dp'))/100;
         $total_biaya = preg_replace('/[^0-9]/', '', $request->input('total_biaya'))/100;
+        
 
-       $transaksi = Transaksi::create([
+        $transaksi = Transaksi::create([
         'user_id' => $user_id,
         'car_id' => $mobil_id,
         'tanggal_pemesanan' => now()->toDate(),
@@ -85,10 +87,42 @@ class TransaksiController extends Controller
         'total_biaya' => $total_biaya,
         'status' => 'pending',
         'bukti_pembayaran' => NULL,
-       ]);
+        ]);
+
+        // Update ketersediaan mobil
+        $mobil = Car::findOrFail($mobil_id);
+        $mobil->ketersediaan = false;
+        $mobil->save();
 
         return redirect()->route('user.pesanan')->with('success', 'Transaksi berhasil');
 
+    }
+
+    public function uploadBukti(Request $request, $id)
+    {
+        $request->validate([
+            'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $transaksi = Transaksi::findOrFail($id);
+
+        if ($transaksi->foto_bukti !== NULL && Storage::exists(str_replace('/storage', 'public', $transaksi->foto_bukti))) {
+            Storage::delete(str_replace('/storage', 'public', $transaksi->foto_bukti));
+        }
+
+        if($request->hasFile('bukti_pembayaran')){
+            $path = $request->file('bukti_pembayaran');
+            $filename = time().'_'.$path->getClientOriginalName();
+            $path->storeAs('public/images/transaksi', $filename);
+            $pathStore = '/storage/images/transaksi/'.$filename;
+        }else{
+            $pathStore = NULL;
+        }
+
+        $transaksi->foto_bukti = $pathStore;
+        $transaksi->save();
+
+        return redirect()->route('user.pesanan')->with('success', 'Upload Bukti Transfer berhasil');
     }
 
     public function updateStatusBayar($id)
@@ -115,30 +149,5 @@ class TransaksiController extends Controller
         $transaksi->save();
         return redirect()->route('admin.riwayat-transaksi.index')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
     }
-    // public function uploadBukti(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    //     ]);
-
-    //     $transaksi = Transaksi::findOrFail($id);
-
-    //     if ($transaksi->foto_bukti !== NULL && Storage::exists(str_replace('/storage', 'public', $transaksi->foto_bukti))) {
-    //         Storage::delete(str_replace('/storage', 'public', $transaksi->foto_bukti));
-    //     }
-
-    //     if($request->hasFile('file')){
-    //         $path = $request->file('file');
-    //         $filename = time().'_'.$path->getClientOriginalName();
-    //         $path->storeAs('public/images/transaksi', $filename);
-    //         $pathStore = '/storage/images/transaksi/'.$filename;
-    //     }else{
-    //         $pathStore = NULL;
-    //     }
-
-    //     $transaksi->foto_bukti = $pathStore;
-    //     $transaksi->update();
-
-    //     return redirect()->route('user.pesanan')->with('success', 'Upload Bukti Transfer berhasil');
-    // }
+    
 }

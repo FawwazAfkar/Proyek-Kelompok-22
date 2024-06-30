@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
     {
 
         User::create([
-            'name' => 'Waz',
-            'email' => 'waz@gmail.com',
+            'name' => 'Rendy',
+            'email' => 'rendygacor34@gmail.com',
             'usertype' => 'user',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('rendyan34'),
             'foto' => '/storage/images/default.png',
             'kartu_identitas' => NULL
         ]);

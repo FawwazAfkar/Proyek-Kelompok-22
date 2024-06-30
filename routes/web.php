@@ -30,7 +30,7 @@ Route::middleware(['auth' , 'userMiddleware'])->group(function(){
     Route::get('/cars', [UserController::class, 'cars'])->name('user.cars');
     Route::get('/about', [UserController::class,'about'])->name('user.about');
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('user.transaksi.store');
-    Route::post('/transaksi/uploadBukti/{id}', [TransaksiController::class, 'uploadBukti'])->name('user.pesanan.uploadBukti');
+    Route::put('/transaksi/uploadBukti/{id}', [TransaksiController::class, 'uploadBukti'])->name('user.pesanan.uploadBukti');
     
 
 

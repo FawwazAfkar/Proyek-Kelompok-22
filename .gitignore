@@ -13,3 +13,4 @@ yarn-error.log
 /.idea
 /public/storage
 /storage/*.key
+database/seeds
