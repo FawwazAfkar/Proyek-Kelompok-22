@@ -67,15 +67,18 @@ class TransaksiController extends Controller
 
     $user->save();
 
-    // Insert transaksi
-    $mobil_id = $request->input('mobil_id');
-    $dp = preg_replace('/[^0-9]/', '', $request->input('dp')) / 100;
-    $total_biaya = preg_replace('/[^0-9]/', '', $request->input('total_biaya')) / 100;
+        //insert transaksi
+
+        $mobil_id = $request->input('mobil_id');
+        $dp = preg_replace('/[^0-9]/', '', $request->input('dp'))/100;
+        $total_biaya = preg_replace('/[^0-9]/', '', $request->input('total_biaya'))/100;
+        $jumlah_hari = $request->input('jumlah_hari');
 
     $transaksi = Transaksi::create([
         'user_id' => $user_id,
         'car_id' => $mobil_id,
         'tanggal_pemesanan' => now()->toDate(),
+        'jumlah_hari' => $jumlah_hari,
         'tanggal_mulai' => NULL,
         'tanggal_selesai' => NULL,
         'uang_muka' => $dp,
@@ -124,6 +127,8 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->status = 'dibayar';
+        $transaksi->tanggal_mulai = now()->toDate();
+        $transaksi->tanggal_selesai = now()->addDays($transaksi->jumlah_hari)->toDate();
         $transaksi->save();
         return redirect()->route('admin.transaksi-berlangsung.index')->with('success', 'Status transaksi berhasil diperbarui');
     }
@@ -132,6 +137,9 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->delete();
+        $mobil = Car::findOrFail($transaksi->car_id);
+        $mobil->ketersediaan = true;
+        $mobil->save();
         return redirect()->route('admin.transaksi-berlangsung.index')->
         with('success', 'Transaksi berhasil dihapus');
     }
@@ -141,6 +149,9 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->status = 'selesai';
+        $mobil = Car::findOrFail($transaksi->car_id);
+        $mobil->ketersediaan = true;
+        $mobil->save();
         $transaksi->save();
         return redirect()->route('admin.riwayat-transaksi.index')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
     }

@@ -28,7 +28,7 @@
                             <th>Nama User</th>
                             <th>Jenis Mobil</th>
                             <th>Foto Identitas</th>
-                            <th>Jumlah hari</th>
+                            <th>Jumlah Hari</th>
                             <th>Total(Rp)</th>
                             <th>Total DP</th>
                             <th>Bukti Pembayaran DP</th>
@@ -74,7 +74,7 @@
                             <th>Nama User</th>
                             <th>Jenis Mobil</th>
                             <th>Foto Identitas</th>
-                            <th>Jumlah hari</th>
+                            <th>Jumlah Hari</th>
                             <th>Total(Rp)</th>
                             <th>Total DP</th>
                             <th>Bukti Pembayaran DP</th>
