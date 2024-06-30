@@ -12,10 +12,18 @@ use Illuminate\Support\Facades\DB;
 class TransaksiController extends Controller
 {
     public function index1(){
-        return view("admin.transaksi-berlangsung.index");
+        $transaksis = Transaksi::select('transaksis.*', 'cars.nama_mobil','cars.harga_sewa', 'users.name as nama_user','users.kartu_identitas')
+            ->join('cars', 'transaksis.car_id', '=', 'cars.id')
+            ->join('users', 'transaksis.user_id', '=', 'users.id')
+            ->get();
+        return view("admin.transaksi-berlangsung.index", compact('transaksis'));
     }
     public function index2(){
-        return view("admin.riwayat-transaksi.index");
+        $transaksis = Transaksi::select('transaksis.*', 'cars.nama_mobil', 'cars.harga_sewa', 'users.name as nama_user','users.kartu_identitas')
+            ->join('cars', 'transaksis.car_id', '=', 'cars.id')
+            ->join('users', 'transaksis.user_id', '=', 'users.id')
+            ->get();
+        return view("admin.riwayat-transaksi.index", compact('transaksis') );
     }
     public function pesanan(){
        // join table cars, transaksi
@@ -83,6 +91,30 @@ class TransaksiController extends Controller
 
     }
 
+    public function updateStatusBayar($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = 'dibayar';
+        $transaksi->save();
+        return redirect()->route('user.pesanan')->with('success', 'Status transaksi berhasil diperbarui');
+    }
+
+    public function updateStatusCancel($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = 'selesai';
+        $transaksi->save();
+        return redirect()->route('user.pesanan')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
+    }
+
+
+    public function updateStatusSelesai($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = 'selesai';
+        $transaksi->save();
+        return redirect()->route('user.pesanan')->with('success', 'Status transaksi berhasil diperbarui menjadi selesai');
+    }
     // public function uploadBukti(Request $request, $id)
     // {
     //     $request->validate([

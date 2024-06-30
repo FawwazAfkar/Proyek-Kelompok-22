@@ -1,4 +1,6 @@
+@props(['transaction'])
 {{-- Modal detail Transaksi --}}
+
 <div class="modal fade" id="modal-detail">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -82,7 +84,7 @@
 
 {{-- Modal ACC data Transaksi --}}
 
-<div class="modal fade" id="modal-batal">
+<div class="modal fade" id="modal-acc">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -92,12 +94,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin Acc? &hellip;</p>
+                <p>Apakah anda yakin ingin ACC? &hellip;</p>
             </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Batalkan</button>
-            </div>
+            <form action="{{ route('admin.transaksi.bayar', $transaction->id) }}" method="POST"> 
+                @csrf
+                @method('PUT')
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">ACC</button>
+                </div>
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>
@@ -118,10 +124,14 @@
             <div class="modal-body">
                 <p>Apakah anda yakin ingin membatalkan? &hellip;</p>
             </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Batalkan</button>
-            </div>
+            <form action="{{ route('admin.transaksi.batal', ['id'=> $transaction->id]) }}" method="POST"> 
+                @csrf
+                @method('PUT')
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Batalkan</button>
+                </div>
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>

@@ -59,6 +59,7 @@ Route::middleware(['auth' , 'adminMiddleware'])->prefix('/admin')->group(functio
     });
     Route::prefix('/transaksi-berlangsung')->group(function() {
         Route::get('/', [TransaksiController::class,'index1'])->name('admin.transaksi-berlangsung.index');
+        Route::put('/edit/{id}', [TransaksiController::class, 'updateStatusBayar'])->name('admin.transaksi-berlangsung.bayar');
     });
     Route::prefix('/riwayat-transaksi')->group(function() {
         Route::get('/', [TransaksiController::class,'index2'])->name('admin.riwayat-transaksi.index');
