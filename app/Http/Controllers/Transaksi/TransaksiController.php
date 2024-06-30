@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\DB;
 class TransaksiController extends Controller
 {
     public function index1(){
-        $transaksis = Transaksi::select('transaksis.*', 'cars.nama_mobil','cars.harga_sewa', 'users.name as nama_user','users.kartu_identitas')
+        $transaksis = Transaksi::select('transaksis.*', 'cars.nama_mobil','cars.harga_sewa', 'users.name as nama_user','users.kartu_identitas','cars.gambar as gambar_mobil')
             ->join('cars', 'transaksis.car_id', '=', 'cars.id')
             ->join('users', 'transaksis.user_id', '=', 'users.id')
             ->get();
         return view("admin.transaksi-berlangsung.index", compact('transaksis'));
     }
     public function index2(){
-        $transaksis = Transaksi::select('transaksis.*', 'cars.nama_mobil', 'cars.harga_sewa', 'users.name as nama_user','users.kartu_identitas')
+        $transaksis = Transaksi::select('transaksis.*', 'cars.nama_mobil', 'cars.harga_sewa', 'users.name as nama_user','users.kartu_identitas','cars.gambar as gambar_mobil')
             ->join('cars', 'transaksis.car_id', '=', 'cars.id')
             ->join('users', 'transaksis.user_id', '=', 'users.id')
             ->get();
