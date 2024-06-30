@@ -1,4 +1,22 @@
 <x-app-layout>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-3 text-center border-0">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3" style="font-weight: bold; font-size: 1.5rem;">Informasi Rekening</h5>
+                        <p class="card-text mb-2" style="font-size: 1rem;">Nama Pemilik: <strong>Jawir Sukiwir</strong></p>
+                        <div class="d-flex justify-content-center align-items-center mb-2">
+                            <p class="card-text mb-0" style="font-size: 1rem;">Nomor Rekening: <strong>1234567890</strong></p>
+                            <button class="btn btn-outline-secondary btn-sm ms-2" onclick="copyToClipboard()">Salin</button>
+                        </div>
+                        <p class="card-text mb-0" style="font-size: 1rem;">Nama Bank: <strong>BRI</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -52,9 +70,13 @@
                                                     <span class="badge bg-warning text-dark">Pending</span>
                                                 </td>
                                                 <td>
+                                                    @if($item->foto_bukti === NULL)
                                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-upload-bukti{{ $item->id }}">
                                                         Unggah
                                                     </button>
+                                                    @else
+                                                    <span class="badge bg-warning text-dark">Menunggu Verifikasi</span>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             <x-userapp.modal-upload-bukti :transaksi="$item" />
@@ -140,3 +162,26 @@
     </div>
 </x-app-layout>
 
+<!-- Toast Notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+    <div id="copyToast" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Informasi rekening berhasil disalin ke clipboard
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function copyToClipboard() {
+        const text = `1234567890`;
+        navigator.clipboard.writeText(text).then(function() {
+            alert('Nomor rekening berhasil disalin ke clipboard');
+        }, function(err) {
+            console.error('Gagal menyalin teks: ', err);
+        });
+    }
+</script>

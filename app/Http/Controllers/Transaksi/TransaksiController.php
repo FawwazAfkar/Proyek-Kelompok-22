@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Car;
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
@@ -27,48 +28,45 @@ class TransaksiController extends Controller
         return view("admin.riwayat-transaksi.index", compact('transaksis') );
     }
     public function pesanan(){
-       // join table cars, transaksi
-        $pesanan = DB::table('transaksis')
+        $userLogin = Auth::user(); 
+        $pesanan = Transaksi::select('transaksis.*', 'cars.nama_mobil', 'cars.deskripsi')
             ->join('cars', 'transaksis.car_id', '=', 'cars.id')
-            ->select('transaksis.*', 'cars.*')
+            ->where('user_id', $userLogin->id)
             ->get();
+        return view('user.pesanan', compact('pesanan'));    
+    }
+    
 
-            return view('user.pesanan', compact('pesanan'));    
+    public function store(Request $request)
+    {
+    $request->validate([
+        'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    $pathStore = NULL;
+
+    if ($request->hasFile('kartu_identitas')) {
+        $path = $request->file('kartu_identitas');
+        $filename = time() . '_' . $path->getClientOriginalName();
+        $path->storeAs('public/images/user/kartuid', $filename);
+        $pathStore = '/storage/images/user/kartuid/' . $filename;
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+    // Insert or update idcard
+    $user_id = $request->input('user_id');
+    $user = User::findOrFail($user_id);
 
-        if($request->hasFile('file')){
-            $path = $request->file('file');
-            $filename = time().'_'.$path->getClientOriginalName();
-            $path->storeAs('public/images/user/kartuid', $filename);
-            $pathStore = '/storage/images/user/kartuid/'.$filename;
-        }else{
-            $pathStore = NULL;
-        }
+    // Delete previous id card image if it exists
+    if ($user->kartu_identitas !== NULL && Storage::exists(str_replace('/storage', 'public', $user->kartu_identitas))) {
+        Storage::delete(str_replace('/storage', 'public', $user->kartu_identitas));
+    }
 
-        //insertorupdate idcard
-        $user_id = $request->input('user_id');
+    // Update user id card image
+    if ($pathStore !== NULL) {
+        $user->kartu_identitas = $pathStore;
+    }
 
-        $user = User::findOrFail($user_id);
-
-        // Hapus foto customer sebelumnya jika ada
-        if ($user->kartu_identitas !== NULL && Storage::exists(str_replace('/storage', 'public', $user->kartu_identitas))) {
-            Storage::delete(str_replace('/storage', 'public', $user->kartu_identitas));
-        }
-
-        if ($request->hasFile('file')) {
-            $path = $request->file('file');
-            $filename = time() . '_' . $path->getClientOriginalName();
-            $path->storeAs('public/images/user/kartuid', $filename);
-            $pathStore = '/storage/images/user/kartuid/' . $filename;
-            $user->kartu_identitas = $pathStore;
-        }
-
-        $user->save();
+    $user->save();
 
         //insert transaksi
 
@@ -77,7 +75,7 @@ class TransaksiController extends Controller
         $total_biaya = preg_replace('/[^0-9]/', '', $request->input('total_biaya'))/100;
         $jumlah_hari = $request->input('jumlah_hari');
 
-        $transaksi = Transaksi::create([
+    $transaksi = Transaksi::create([
         'user_id' => $user_id,
         'car_id' => $mobil_id,
         'tanggal_pemesanan' => now()->toDate(),
@@ -88,43 +86,50 @@ class TransaksiController extends Controller
         'total_biaya' => $total_biaya,
         'status' => 'pending',
         'bukti_pembayaran' => NULL,
-        ]);
+    ]);
 
-        // Update ketersediaan mobil
-        $mobil = Car::findOrFail($mobil_id);
-        $mobil->ketersediaan = false;
-        $mobil->save();
+    // Update ketersediaan mobil
+    $mobil = Car::findOrFail($mobil_id);
+    $mobil->ketersediaan = false;
+    $mobil->save();
 
-        return redirect()->route('user.pesanan')->with('success', 'Transaksi berhasil');
+    return redirect()->route('user.pesanan')->with('success', 'Transaksi berhasil');
+}
 
+
+public function uploadBukti(Request $request, $id)
+{
+    $request->validate([
+        'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    $pathStore = NULL;
+
+    if ($request->hasFile('bukti_pembayaran')) {
+        $path = $request->file('bukti_pembayaran');
+        $filename = time() . '_' . $path->getClientOriginalName();
+        $path->storeAs('public/images/transaksi', $filename);
+        $pathStore = '/storage/images/transaksi/' . $filename;
     }
 
-    public function uploadBukti(Request $request, $id)
-    {
-        $request->validate([
-            'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+    // Find the transaction
+    $transaksi = Transaksi::findOrFail($id);
 
-        $transaksi = Transaksi::findOrFail($id);
+    // Delete previous payment proof image if it exists
+    if ($transaksi->foto_bukti !== NULL && Storage::exists(str_replace('/storage', 'public', $transaksi->foto_bukti))) {
+        Storage::delete(str_replace('/storage', 'public', $transaksi->foto_bukti));
+    }
 
-        if ($transaksi->foto_bukti !== NULL && Storage::exists(str_replace('/storage', 'public', $transaksi->foto_bukti))) {
-            Storage::delete(str_replace('/storage', 'public', $transaksi->foto_bukti));
-        }
-
-        if($request->hasFile('bukti_pembayaran')){
-            $path = $request->file('bukti_pembayaran');
-            $filename = time().'_'.$path->getClientOriginalName();
-            $path->storeAs('public/images/transaksi', $filename);
-            $pathStore = '/storage/images/transaksi/'.$filename;
-        }else{
-            $pathStore = NULL;
-        }
-
+    // Update transaction payment proof image
+    if ($pathStore !== NULL) {
         $transaksi->foto_bukti = $pathStore;
-        $transaksi->save();
-
-        return redirect()->route('user.pesanan')->with('success', 'Upload Bukti Transfer berhasil');
     }
+
+    $transaksi->save();
+
+    return redirect()->route('user.pesanan')->with('success', 'Upload Bukti Transfer berhasil');
+}
+
 
     public function updateStatusBayar($id)
     {
