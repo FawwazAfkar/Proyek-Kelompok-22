@@ -25,7 +25,7 @@
                                 <div class="form-group">
                                     <label for="nama">Nama Mobil</label>
                                     <input type="nama" class="form-control img" id="namaMobil" name="namaMobil"
-                                        placeholder="ex Avanza Toyota" value="{{ $mobil->nama_mobil }}">
+                                    value="{{ $mobil->nama_mobil }}">
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
@@ -34,7 +34,7 @@
                                                 <i class="fas fa-dollar-sign"></i>
                                             </span>
                                         </div>
-                                        <input type="number" class="form-control" placeholder="Harga Sewa"
+                                        <input type="number" class="form-control"
                                             id="harga_sewa" name="harga_sewa" value="{{ $mobil->harga_sewa }}">
                                         <div class="input-group-append">
                                             <div class="input-group-text"><i class="fas fa-check"></i></div>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Kendaraan</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter ..." id="deskripsi" name="deskripsi">
+                                    <textarea class="form-control" rows="3" id="deskripsi" name="deskripsi">
                                         {{ $mobil->deskripsi }}
                                     </textarea>
                                 </div>

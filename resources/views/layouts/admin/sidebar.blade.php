@@ -71,7 +71,6 @@
                          <i class="nav-icon fa-solid fa-car"></i>
                          <p>
                              Cars
-                             <span class="right badge badge-warning">Check</span>
                          </p>
                      </a>
                  </li>
@@ -81,7 +80,6 @@
                          <p>
                              Transaksi
                              <i class="fas fa-angle-left right"></i>
-                             <span class="badge badge-info right">6</span>
                          </p>
                      </a>
                      <ul class="nav nav-treeview">

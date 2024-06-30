@@ -55,7 +55,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Jumlah Mobil</span>
-                    <span class="info-box-number">760</span>
+                    <span class="info-box-number">{{ $jumlahMobil }}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -67,7 +67,7 @@
                 <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-money-bill"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Transaksi</span>
-                    <span class="info-box-number">2,000</span>
+                    <span class="info-box-number">{{ $jumlahTransaksi }}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
