@@ -13,7 +13,7 @@ class AdminController extends Controller
         $admins = User::where('usertype', 'admin')->get();
         $users = User::where('usertype', 'user')->get();
         $mobil = Car::all();
-        $transaksi = Transaksi::all();
+        $transaksi = Transaksi::whereIn('status', ['pending', 'dibayar'])->get();
         $jumlahAdmin = count($admins);
         $jumlahUser = count($users);
         $jumlahMobil = count($mobil);

@@ -26,14 +26,14 @@
                                     <label for="buktiTransaksi">
                                         Bukti Transaksi
                                     </label>
-                                    <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
+                                    <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100%">
                                 </div>
                             </div>
                             <div class="col-md-6">
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Foto Kartu Identitas</label>
-                                    <img src="{{ asset($transaction->kartu_identitas) }}" alt="Foto Identitas" class="img-thumbnail" width="100">
+                                    <img src="{{ asset($transaction->kartu_identitas) }}" alt="Foto Identitas" class="img-thumbnail" width="100%">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nama Customer</label>
@@ -42,7 +42,7 @@
                                     </input>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Jenis Mobil</label>
+                                    <label for="exampleInputEmail1">Nama Mobil</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1"
                                     readonly value="{{ $transaction->nama_mobil }}"/>
                                     </input>
@@ -55,9 +55,9 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="exampleInputEmail1">Total</label>
+                                            <label for="exampleInputEmail1">Total Biaya Sewa</label>
                                             <input type="text" class="form-control" id="exampleInputEmail1"
-                                            readonly value="{{ $transaction->harga_sewa }}"/>
+                                            readonly value="{{ $transaction->total_biaya }}"/>
                                             </input>
                                         </div>
                                     </div>

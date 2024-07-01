@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="jumlah_hari">Jumlah Hari</label>
-                                        <input type="number" class="form-control" id="jumlah_hari{{ $mobil->id }}" name="jumlah_hari" placeholder="1">
+                                        <input type="number" class="form-control" id="jumlah_hari{{ $mobil->id }}" name="jumlah_hari" placeholder="1" value="1" min="1">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="total_biaya">Total</label>
