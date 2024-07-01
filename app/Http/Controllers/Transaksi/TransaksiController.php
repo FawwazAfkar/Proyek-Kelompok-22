@@ -43,30 +43,24 @@ class TransaksiController extends Controller
         'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 
-    $pathStore = NULL;
+    // Retrieve user
+    $user_id = $request->input('user_id');
+    $user = User::findOrFail($user_id);
 
     if ($request->hasFile('kartu_identitas')) {
+        // Delete previous id card image if it exists
+        if ($user->kartu_identitas !== NULL && Storage::exists(str_replace('/storage', 'public', $user->kartu_identitas))) {
+            Storage::delete(str_replace('/storage', 'public', $user->kartu_identitas));
+        }
+
         $path = $request->file('kartu_identitas');
         $filename = time() . '_' . $path->getClientOriginalName();
         $path->storeAs('public/images/user/kartuid', $filename);
         $pathStore = '/storage/images/user/kartuid/' . $filename;
-    }
 
-    // Insert or update idcard
-    $user_id = $request->input('user_id');
-    $user = User::findOrFail($user_id);
-
-    // Delete previous id card image if it exists
-    if ($user->kartu_identitas !== NULL && Storage::exists(str_replace('/storage', 'public', $user->kartu_identitas))) {
-        Storage::delete(str_replace('/storage', 'public', $user->kartu_identitas));
-    }
-
-    // Update user id card image
-    if ($pathStore !== NULL) {
         $user->kartu_identitas = $pathStore;
+        $user->save();
     }
-
-    $user->save();
 
         //insert transaksi
 
