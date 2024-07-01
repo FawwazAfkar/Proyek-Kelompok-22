@@ -70,10 +70,19 @@
                 </div>
                 <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
+
         </div>
+        <!-- /.info-box -->
+
         <!-- /.col -->
     </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <img src="https://wallpapercave.com/wp/wp2899051.jpg" alt="" style="width: 100%; height: 100%;">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
-
-<
