@@ -7,7 +7,6 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active">Daftar Mobil</li>
             </ol>
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -66,7 +65,7 @@
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-money-bill"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Transaksi</span>
+                    <span class="info-box-text">Transaksi Aktif</span>
                     <span class="info-box-number">{{ $jumlahTransaksi }}</span>
                 </div>
                 <!-- /.info-box-content -->

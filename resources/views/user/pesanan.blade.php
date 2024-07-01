@@ -52,7 +52,7 @@
                                                 <th>Uang Muka</th>
                                                 <th>Total Biaya</th>
                                                 <th>Status</th>
-                                                <th>Aksi</th>
+                                                <th>Bukti Bayar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
