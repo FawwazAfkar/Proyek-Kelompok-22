@@ -19,7 +19,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
 </head>
 
 <body class="font-sans antialiased">
@@ -48,8 +48,67 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     {{-- ppopper js --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"
-        integrity="sha384-oQWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous"></script>
+        integrity="sha384-oQWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deskripsi = document.getElementById('deskripsiText').textContent.trim();
+
+            const specsList = document.createElement('ul');
+            specsList.classList.add('list-unstyled', 'ms-3');
+
+            const featuresList = document.createElement('ul');
+            featuresList.classList.add('list-unstyled', 'ms-3');
+
+            let specs = [];
+            let features = [];
+
+            const specsIndex = deskripsi.indexOf('Spesifikasi:');
+            const featuresIndex = deskripsi.indexOf('Fitur:');
+
+            if (specsIndex !== -1) {
+                const specsStart = specsIndex + 'Spesifikasi:'.length;
+                const specsEnd = featuresIndex !== -1 ? featuresIndex : deskripsi.length;
+                specs = deskripsi.substring(specsStart, specsEnd).split(',');
+            }
+
+            if (featuresIndex !== -1) {
+                const featuresStart = featuresIndex + 'Fitur:'.length;
+                features = deskripsi.substring(featuresStart).split(',');
+            }
+
+            function capitalizeFirstLetter(string) {
+                return string.replace(/\b\w/g, function(char) {
+                    return char.toUpperCase();
+                });
+            }
+
+            function populateList(list, items, headerText) {
+                if (items.length > 0) {
+                    items.forEach(item => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `- ${capitalizeFirstLetter(item.trim().replace(/\.$/, ''))}`;
+                        list.appendChild(listItem);
+                    });
+
+                    const header = document.createElement('h6');
+                    header.textContent = headerText;
+                    header.classList.add('mt-4', 'mb-2');
+                    document.querySelector('.car-details').appendChild(header);
+                    document.querySelector('.car-details').appendChild(list);
+                }
+            }
+
+            populateList(specsList, specs, 'Spesifikasi:');
+            populateList(featuresList, features, 'Fitur:');
+
+            if (specs.length > 0 || features.length > 0) {
+                document.getElementById('deskripsiText').style.display = 'none';
+            }
+        });
+    </script>
+
 </body>
 
 </html>
