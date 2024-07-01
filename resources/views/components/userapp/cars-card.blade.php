@@ -4,7 +4,7 @@
     <img src="{{ asset($image) }}" class="card-img-top rounded-top" alt="{{ $title }}" style="height: 200px; object-fit: cover;">
     <div class="card-body d-flex flex-column">
         <h5 class="card-title text-dark fw-bold mb-2">{{ $title }}</h5>
-        <p class="card-text text-muted mb-4">{{ Str::limit($description, 100) }}</p>
+        <p class="card-text text-muted mb-4">{{ Str::limit($description, 80) }}</p>
         <p class="card-text fw-bold mt-auto">{{ 'Rp ' . number_format($price, 0, ',', '.') . ' /hari' }}</p>
         @if ($ketersediaan)
             <p class="card-text text-success fw-bold mb-4">Tersedia</p>

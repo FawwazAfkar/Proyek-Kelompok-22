@@ -25,12 +25,14 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama User</th>
+                            <th>Nama Customer</th>
                             <th>Jenis Mobil</th>
                             <th>Foto Identitas</th>
-                            <th>Jumlah Hari</th>
-                            <th>Total(Rp)</th>
-                            <th>Total DP</th>
+                            <th>Durasi (hari)</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Selesai</th>
+                            <th>Total Biaya Sewa</th>
+                            <th>DP Minimal</th>
                             <th>Bukti Pembayaran DP</th>
                             <th>Status</th>
                             <th>Detail</th>
@@ -47,7 +49,9 @@
                                     <img src="{{ asset($transaction->kartu_identitas) }}" alt="Foto Identitas" class="img-thumbnail" width="100">
                                 </td>
                                 <td>{{ $transaction->jumlah_hari }}</td>
-                                <td>{{ $transaction->harga_sewa }}</td>
+                                <td>{{ $transaction->tanggal_mulai }}</td>
+                                <td>{{ $transaction->tanggal_selesai }}</td>
+                                <td>{{ $transaction->total_biaya }}</td>
                                 <td>{{ $transaction->uang_muka}}</td>
                                 <td>
                                     <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
@@ -71,12 +75,14 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Nama User</th>
+                            <th>Nama Customer</th>
                             <th>Jenis Mobil</th>
                             <th>Foto Identitas</th>
-                            <th>Jumlah Hari</th>
-                            <th>Total(Rp)</th>
-                            <th>Total DP</th>
+                            <th>Durasi (hari)</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Selesai</th>
+                            <th>Total Biaya Sewa</th>
+                            <th>DP Minimal</th>
                             <th>Bukti Pembayaran DP</th>
                             <th>Status</th>
                             <th>Detail</th>

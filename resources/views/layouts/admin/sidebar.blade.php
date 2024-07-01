@@ -31,7 +31,7 @@
              </div>
          </div>
          <nav>
-             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+             <ul class="nav nav-pills nav-sidebar flex-column mt-3" data-widget="treeview" role="menu"
                  data-accordion="false">
                  <li class="nav-item">
                      <a href="{{ route('admin.dashboard') }}" class="nav-link" id="dashboard-link">
