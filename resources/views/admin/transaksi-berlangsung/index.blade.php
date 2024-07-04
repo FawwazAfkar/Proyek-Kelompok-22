@@ -84,18 +84,38 @@
                                             <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran"
                                                 class="img-thumbnail" width="100">
                                         </td>
-                                        <td>
-                                            @if ($transaction->status == 'pending')
-                                                <span class="badge badge-warning">{{ $transaction->status }}</span>
-                                            @elseif($transaction->status == 'dibayar')
-                                                <span class="badge badge-success">{{ $transaction->status }}</span>
-                                            @endif
-                                        </td>
-                                        <td class="d-flex justify-content-center">
-                                            {{-- detail --}}
-                                            <button type="button" class="btn btn-primary mr-4" data-toggle="modal"
-                                                data-target="#modal-detail{{ $transaction->id }}">
-                                                <i class="fas fa-eye"></i>
+                                    @elseif ($transaction->status == 'dibayar')
+                                        <td>{{ $transaction->tanggal_mulai }}</td>
+                                        <td>{{ $transaction->tanggal_selesai }}</td>
+                                    @endif
+                                    <td>{{ 'Rp ' . number_format($transaction->total_biaya, 0, ',', '.')}}</td>
+                                    <td>{{ 'Rp ' . number_format($transaction->uang_muka, 0, ',', '.')}}</td>
+                                    <td>
+                                        <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
+                                    </td>
+                                    <td>
+                                        @if($transaction->status == 'pending')
+                                            <span class="badge badge-warning">{{ $transaction->status }}</span>
+                                        @elseif($transaction->status == 'dibayar')
+                                            <span class="badge badge-success">{{ $transaction->status }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="d-flex justify-content-center">
+                                        {{-- detail --}}
+                                        <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#modal-detail{{ $transaction->id }}">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        {{-- acc --}}
+                                        @if($transaction->status == 'pending')
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-acc{{ $transaction->id }}">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-batal{{ $transaction->id }}">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        @elseif($transaction->status == 'dibayar')
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-selesai{{ $transaction->id }}">
+                                                <i class="fas fa-check"></i>
                                             </button>
                                             {{-- acc --}}
                                             @if ($transaction->status == 'pending')

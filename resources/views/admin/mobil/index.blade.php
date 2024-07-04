@@ -62,7 +62,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $mobil->nama_mobil }}</td>
-                                    <td>{{ $mobil->harga_sewa }}</td>
+                                    <td>{{ 'Rp ' . number_format($mobil->harga_sewa, 0, ',', '.') . ' /hari' }}</td>
                                     <td>{{ $mobil->deskripsi }}</td>
 
                                     <td><img src="{{ asset($mobil->gambar) }}" alt="Foto Mobil"

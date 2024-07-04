@@ -93,18 +93,29 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>No</th>
-                                <th>Nama Customer</th>
-                                <th>Jenis Mobil</th>
-                                <th>Foto Identitas</th>
-                                <th>Durasi (hari)</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Selesai</th>
-                                <th>Total Biaya Sewa</th>
-                                <th>DP Minimal</th>
-                                <th>Bukti Pembayaran DP</th>
-                                <th>Status</th>
-                                <th>Detail</th>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $transaction->nama_user }}</td>
+                                <td>{{ $transaction->nama_mobil }}</td>
+                                <td>
+                                    <img src="{{ asset($transaction->kartu_identitas) }}" alt="Foto Identitas" class="img-thumbnail" width="100">
+                                </td>
+                                <td>{{ $transaction->jumlah_hari }}</td>
+                                <td>{{ $transaction->tanggal_mulai }}</td>
+                                <td>{{ $transaction->tanggal_selesai }}</td>
+                                <td>{{ 'Rp ' . number_format($transaction->total_biaya, 0, ',', '.')}}</td>
+                                <td>{{ 'Rp ' . number_format($transaction->uang_muka, 0, ',', '.')}}</td>
+                                <td>
+                                    <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
+                                </td>
+                                <td>
+                                    <span class="badge badge-success">{{ $transaction->status }}</span>
+                                </td>
+                                <td class="d-flex justify-content-center">
+                                    {{-- detail --}}
+                                    <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#modal-detail{{ $transaction->id }}">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
                             </tr>
                         </tfoot>
                     </table>

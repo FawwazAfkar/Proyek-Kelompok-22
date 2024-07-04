@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Data Admin</h4>
+                <h4 class="modal-title">Edit Data Customer</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,9 +12,9 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6 d-flex justify-content-center align-items-center">
-                        {{-- foto admin --}}
-                        <img src="{{ $user->foto }}" class="img-fluid overflow-hidden img-circle"
-                            alt="Responsive image" id="imgPreview{{ $user->id }}" width="100%">
+                        <img src="{{ asset($user->foto ? 'storage/' . $user->foto : 'path/to/default-image.jpg') }}"
+                            class="img-fluid overflow-hidden rounded-circle"
+                            alt="Profile Picture" id="imgPreview{{ $user->id }}" style="max-width: 100%; height: auto;">
                     </div>
                     <div class="col-md-6">
                         <form action="{{ route('admin.user-customer.edit', $user->id) }}" method="POST"
@@ -38,13 +38,13 @@
                                     <label for="password{{ $user->id }}">Password</label>
                                     <input type="password" class="form-control" name="password"
                                         id="password{{ $user->id }}" placeholder="Password">
-                                    <small class="text-mute">Kosongkan jika tidak ingin mengganti password</small>
+                                    <small class="text-muted">Kosongkan jika tidak ingin mengganti password</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="file{{ $user->id }}">Foto Profile</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="file"
+                                            <input type="file" class="custom-file-input" name="foto"
                                                 id="file{{ $user->id }}">
                                             <label class="custom-file-label" for="file{{ $user->id }}">Choose
                                                 file</label>

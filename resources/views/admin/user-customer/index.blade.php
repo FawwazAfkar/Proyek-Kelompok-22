@@ -65,8 +65,10 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->usertype }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td><img src="{{ asset($user->foto) }}" alt="Foto Customer"
-                                            class="img-circle img-size-32 mr-2"></td>
+                                    <td>
+                                        <img src="{{ $user->foto ? asset('storage/' . $user->foto) : asset('storage/images/defaultuser.jpg') }}" alt="Foto Customer"
+                                            class="img-circle img-size-32 mr-2">
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                             data-target="#edit{{ $user->id }}">

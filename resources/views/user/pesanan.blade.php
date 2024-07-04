@@ -5,8 +5,8 @@
                 <div class="card p-3 text-center border-0">
                     <div class="card-body">
                         <h5 class="card-title mb-3" style="font-weight: bold; font-size: 1.5rem;">Informasi Rekening</h5>
-                        <p class="card-text mb-2" style="font-size: 1rem;">Nama Pemilik: <strong>Jawir Sukiwir</strong>
-                        </p>
+                        <p class="card-text mt-3 mb-2 text-muted" style="font-size: 0.9rem;">Silahkan transfer ke nomor rekening di bawah ini untuk melakukan pembayaran.</p>
+                        <p class="card-text mb-2" style="font-size: 1rem;">Nama Pemilik: <strong>Jawir Sukiwir</strong></p>
                         <div class="d-flex justify-content-center align-items-center mb-2">
                             <p class="card-text mb-0" style="font-size: 1rem;">Nomor Rekening:
                                 <strong>1234567890</strong>
@@ -21,15 +21,13 @@
         </div>
     </div>
 
-
-    <div class="container">
+    <div class="container mb-8">
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card mt-4">
@@ -58,122 +56,131 @@
 
                             <!-- Tab Panes -->
                             <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="pending" role="tabpanel"
-                                    aria-labelledby="pending-tab">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Nama Mobil</th>
-                                                <th>Tanggal Pemesanan</th>
-                                                <th>Deskripsi</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Selesai</th>
-                                                <th>Uang Muka</th>
-                                                <th>Total Biaya</th>
-                                                <th>Status</th>
-                                                <th>Bukti Bayar</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pesanan as $item)
-                                                @if ($item->status == 'pending')
-                                                    <tr>
-                                                        <td>{{ $item->nama_mobil }}</td>
-                                                        <td>{{ $item->tanggal_pemesanan }}</td>
-                                                        <td>{{ $item->deskripsi }}</td>
-                                                        <td>{{ $item->tanggal_mulai }}</td>
-                                                        <td>{{ $item->tanggal_selesai }}</td>
-                                                        <td>{{ $item->uang_muka }}</td>
-                                                        <td>{{ $item->total_biaya }}</td>
-                                                        <td>
-                                                            <span class="badge bg-warning text-dark">Pending</span>
-                                                        </td>
-                                                        <td>
-                                                            @if ($item->foto_bukti === null)
-                                                                <button type="button" class="btn btn-primary"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#modal-upload-bukti{{ $item->id }}">
-                                                                    Unggah
-                                                                </button>
-                                                            @else
-                                                                <span class="badge bg-warning text-dark">Menunggu
-                                                                    Verifikasi</span>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                    <x-userapp.modal-upload-bukti :transaksi="$item" />
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                                    @if($pesanan->where('status', 'pending')->isEmpty())
+                                    <p class="text-center text-muted my-4" style="font-size: 1.25rem; font-weight: bold;">Tidak ada pesanan pending.</p>
+                                    @else
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama Mobil</th>
+                                                    <th>Tanggal Pemesanan</th>
+                                                    <th>Deskripsi</th>
+                                                    <th>Tanggal Mulai</th>
+                                                    <th>Tanggal Selesai</th>
+                                                    <th>Uang Muka</th>
+                                                    <th>Total Biaya</th>
+                                                    <th>Status</th>
+                                                    <th>Bukti Bayar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($pesanan as $item)
+                                                    @if($item->status == "pending")
+                                                        <tr>
+                                                            <td>{{ $item->nama_mobil }}</td>
+                                                            <td>{{ $item->tanggal_pemesanan }}</td>
+                                                            <td>{{ $item->deskripsi }}</td>
+                                                            <td>{{ $item->tanggal_mulai }}</td>
+                                                            <td>{{ $item->tanggal_selesai }}</td>
+                                                            <td>{{ $item->uang_muka }}</td>
+                                                            <td>{{ $item->total_biaya }}</td>
+                                                            <td>
+                                                                <span class="badge bg-warning text-dark">Pending</span>
+                                                            </td>
+                                                            <td>
+                                                                @if($item->foto_bukti === NULL)
+                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-upload-bukti{{ $item->id }}">
+                                                                        Unggah
+                                                                    </button>
+                                                                @else
+                                                                    <span class="badge bg-warning text-dark">Menunggu Verifikasi</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <x-userapp.modal-upload-bukti :transaksi="$item" />
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
                                 </div>
                                 <div class="tab-pane fade" id="dibayar" role="tabpanel" aria-labelledby="dibayar-tab">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Nama Mobil</th>
-                                                <th>Tanggal Pemesanan</th>
-                                                <th>Deskripsi</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Selesai</th>
-                                                <th>Uang Muka</th>
-                                                <th>Total Biaya</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pesanan as $item)
-                                                @if ($item->status == 'dibayar')
-                                                    <tr>
-                                                        <td>{{ $item->nama_mobil }}</td>
-                                                        <td>{{ $item->tanggal_pemesanan }}</td>
-                                                        <td>{{ $item->deskripsi }}</td>
-                                                        <td>{{ $item->tanggal_mulai }}</td>
-                                                        <td>{{ $item->tanggal_selesai }}</td>
-                                                        <td>{{ $item->uang_muka }}</td>
-                                                        <td>{{ $item->total_biaya }}</td>
-                                                        <td>
-                                                            <span class="badge bg-primary text-light">Dibayar</span>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                    @if($pesanan->where('status', 'dibayar')->isEmpty())
+                                    <p class="text-center text-muted my-4" style="font-size: 1.25rem; font-weight: bold;">Tidak ada pesanan yang dibayar.</p>
+                                    @else
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama Mobil</th>
+                                                    <th>Tanggal Pemesanan</th>
+                                                    <th>Deskripsi</th>
+                                                    <th>Tanggal Mulai</th>
+                                                    <th>Tanggal Selesai</th>
+                                                    <th>Uang Muka</th>
+                                                    <th>Total Biaya</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($pesanan as $item)
+                                                    @if($item->status == "dibayar")
+                                                        <tr>
+                                                            <td>{{ $item->nama_mobil }}</td>
+                                                            <td>{{ $item->tanggal_pemesanan }}</td>
+                                                            <td>{{ $item->deskripsi }}</td>
+                                                            <td>{{ $item->tanggal_mulai }}</td>
+                                                            <td>{{ $item->tanggal_selesai }}</td>
+                                                            <td>{{ $item->uang_muka }}</td>
+                                                            <td>{{ $item->total_biaya }}</td>
+                                                            <td>
+                                                                <span class="badge bg-primary text-light">Dibayar</span>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
                                 </div>
                                 <div class="tab-pane fade" id="selesai" role="tabpanel" aria-labelledby="selesai-tab">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Nama Mobil</th>
-                                                <th>Tanggal Pemesanan</th>
-                                                <th>Deskripsi</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Selesai</th>
-                                                <th>Uang Muka</th>
-                                                <th>Total Biaya</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pesanan as $item)
-                                                @if ($item->status == 'selesai')
-                                                    <tr>
-                                                        <td>{{ $item->nama_mobil }}</td>
-                                                        <td>{{ $item->tanggal_pemesanan }}</td>
-                                                        <td>{{ $item->deskripsi }}</td>
-                                                        <td>{{ $item->tanggal_mulai }}</td>
-                                                        <td>{{ $item->tanggal_selesai }}</td>
-                                                        <td>{{ $item->uang_muka }}</td>
-                                                        <td>{{ $item->total_biaya }}</td>
-                                                        <td>
-                                                            <span class="badge bg-success text-light">Selesai</span>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                    @if($pesanan->where('status', 'selesai')->isEmpty())
+                                    <p class="text-center text-muted my-4" style="font-size: 1.25rem; font-weight: bold;">Tidak ada pesanan yang selesai.</p>
+                                    @else
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama Mobil</th>
+                                                    <th>Tanggal Pemesanan</th>
+                                                    <th>Deskripsi</th>
+                                                    <th>Tanggal Mulai</th>
+                                                    <th>Tanggal Selesai</th>
+                                                    <th>Uang Muka</th>
+                                                    <th>Total Biaya</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($pesanan as $item)
+                                                    @if($item->status == "selesai")
+                                                        <tr>
+                                                            <td>{{ $item->nama_mobil }}</td>
+                                                            <td>{{ $item->tanggal_pemesanan }}</td>
+                                                            <td>{{ $item->deskripsi }}</td>
+                                                            <td>{{ $item->tanggal_mulai }}</td>
+                                                            <td>{{ $item->tanggal_selesai }}</td>
+                                                            <td>{{ $item->uang_muka }}</td>
+                                                            <td>{{ $item->total_biaya }}</td>
+                                                            <td>
+                                                                <span class="badge bg-success text-light">Selesai</span>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
+   
                                 </div>
                             </div>
                         </div>
@@ -184,26 +191,12 @@
     </div>
 </x-app-layout>
 
-<!-- Toast Notification -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
-    <div id="copyToast" class="toast align-items-center text-white bg-primary border-0" role="alert"
-        aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                Informasi rekening berhasil disalin ke clipboard
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                aria-label="Close"></button>
-        </div>
-    </div>
-</div>
-
-
 <script>
     function copyToClipboard() {
         const text = `1234567890`;
         navigator.clipboard.writeText(text).then(function() {
-            alert('Nomor rekening berhasil disalin ke clipboard');
+            var copyToast = new bootstrap.Toast(document.getElementById('copyToast'));
+            copyToast.show();
         }, function(err) {
             console.error('Gagal menyalin teks: ', err);
         });
