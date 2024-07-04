@@ -8,8 +8,11 @@
                         <p class="card-text mt-3 mb-2 text-muted" style="font-size: 0.9rem;">Silahkan transfer ke nomor rekening di bawah ini untuk melakukan pembayaran.</p>
                         <p class="card-text mb-2" style="font-size: 1rem;">Nama Pemilik: <strong>Jawir Sukiwir</strong></p>
                         <div class="d-flex justify-content-center align-items-center mb-2">
-                            <p class="card-text mb-0" style="font-size: 1rem;">Nomor Rekening: <strong>1234567890</strong></p>
-                            <button class="btn btn-outline-secondary btn-sm ms-2" onclick="copyToClipboard()">Salin</button>
+                            <p class="card-text mb-0" style="font-size: 1rem;">Nomor Rekening:
+                                <strong>1234567890</strong>
+                            </p>
+                            <button class="btn btn-outline-secondary btn-sm ms-2"
+                                onclick="copyToClipboard()">Salin</button>
                         </div>
                         <p class="card-text mb-0" style="font-size: 1rem;">Nama Bank: <strong>BRI</strong></p>
                     </div>
@@ -17,8 +20,14 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container mb-8">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card mt-4">
@@ -29,13 +38,19 @@
                         <div class="table-responsive">
                             <ul class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">Pending</button>
+                                    <button class="nav-link active" id="pending-tab" data-bs-toggle="tab"
+                                        data-bs-target="#pending" type="button" role="tab" aria-controls="pending"
+                                        aria-selected="true">Pending</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="dibayar-tab" data-bs-toggle="tab" data-bs-target="#dibayar" type="button" role="tab" aria-controls="dibayar" aria-selected="false">Dibayar</button>
+                                    <button class="nav-link" id="dibayar-tab" data-bs-toggle="tab"
+                                        data-bs-target="#dibayar" type="button" role="tab" aria-controls="dibayar"
+                                        aria-selected="false">Dibayar</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="selesai-tab" data-bs-toggle="tab" data-bs-target="#selesai" type="button" role="tab" aria-controls="selesai" aria-selected="false">Selesai</button>
+                                    <button class="nav-link" id="selesai-tab" data-bs-toggle="tab"
+                                        data-bs-target="#selesai" type="button" role="tab" aria-controls="selesai"
+                                        aria-selected="false">Selesai</button>
                                 </li>
                             </ul>
 
@@ -165,6 +180,7 @@
                                             </tbody>
                                         </table>
                                     @endif
+   
                                 </div>
                             </div>
                         </div>
