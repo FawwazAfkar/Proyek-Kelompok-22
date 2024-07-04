@@ -51,8 +51,8 @@
                                 <td>{{ $transaction->jumlah_hari }}</td>
                                 <td>{{ $transaction->tanggal_mulai }}</td>
                                 <td>{{ $transaction->tanggal_selesai }}</td>
-                                <td>{{ $transaction->total_biaya }}</td>
-                                <td>{{ $transaction->uang_muka}}</td>
+                                <td>{{ 'Rp ' . number_format($transaction->total_biaya, 0, ',', '.')}}</td>
+                                <td>{{ 'Rp ' . number_format($transaction->uang_muka, 0, ',', '.')}}</td>
                                 <td>
                                     <img src="{{ asset($transaction->foto_bukti) }}" alt="Bukti Pembayaran" class="img-thumbnail" width="100">
                                 </td>

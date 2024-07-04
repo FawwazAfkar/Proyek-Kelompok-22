@@ -11,15 +11,30 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const deskripsi = document.getElementById('deskripsiText').textContent.trim();
+    const deskripsiElements = document.querySelectorAll('#deskripsiText');
+
+    deskripsiElements.forEach(function (deskripsiElement) {
+        const deskripsi = deskripsiElement.textContent.trim();
+        const carDetails = deskripsiElement.closest('.car-details');
+
+        // Check for existing lists and remove them to prevent stacking
+        const existingSpecsHeader = carDetails.querySelector('h6.specs-header');
+        const existingFeaturesHeader = carDetails.querySelector('h6.features-header');
+        const existingSpecsList = carDetails.querySelector('ul.specs-list');
+        const existingFeaturesList = carDetails.querySelector('ul.features-list');
+
+        if (existingSpecsHeader) existingSpecsHeader.remove();
+        if (existingFeaturesHeader) existingFeaturesHeader.remove();
+        if (existingSpecsList) existingSpecsList.remove();
+        if (existingFeaturesList) existingFeaturesList.remove();
 
         // Check for specifications and features
         if (deskripsi.includes('Spesifikasi:') || deskripsi.includes('Fitur:')) {
             const specsList = document.createElement('ul');
-            specsList.classList.add('list-unstyled', 'ms-3');
+            specsList.classList.add('list-unstyled', 'ms-3', 'specs-list');
 
             const featuresList = document.createElement('ul');
-            featuresList.classList.add('list-unstyled', 'ms-3');
+            featuresList.classList.add('list-unstyled', 'ms-3', 'features-list');
 
             // Extract specifications and features
             let specs = [];
@@ -54,9 +69,9 @@
                 // Append specifications list
                 const specsHeader = document.createElement('h6');
                 specsHeader.textContent = 'Spesifikasi:';
-                specsHeader.classList.add('mt-4', 'mb-2'); // Adjust margin as needed
-                document.querySelector('.car-details').appendChild(specsHeader);
-                document.querySelector('.car-details').appendChild(specsList);
+                specsHeader.classList.add('mt-4', 'mb-2', 'specs-header'); // Adjust margin as needed
+                carDetails.appendChild(specsHeader);
+                carDetails.appendChild(specsList);
             }
 
             // Populate features list
@@ -70,13 +85,16 @@
                 // Append features list
                 const featuresHeader = document.createElement('h6');
                 featuresHeader.textContent = 'Fitur:';
-                featuresHeader.classList.add('mt-4', 'mb-2'); // Adjust margin as needed
-                document.querySelector('.car-details').appendChild(featuresHeader);
-                document.querySelector('.car-details').appendChild(featuresList);
+                featuresHeader.classList.add('mt-4', 'mb-2', 'features-header'); // Adjust margin as needed
+                carDetails.appendChild(featuresHeader);
+                carDetails.appendChild(featuresList);
             }
 
             // Hide original description paragraph
-            document.getElementById('deskripsiText').style.display = 'none';
+            deskripsiElement.style.display = 'none';
         }
     });
+});
+
 </script>
+
